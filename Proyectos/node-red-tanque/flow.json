@@ -1,0 +1,32 @@
+[
+  {
+    "id": "inject1",
+    "type": "inject",
+    "name": "Cada 1 segundo",
+    "repeat": "1",
+    "payload": "",
+    "payloadType": "date",
+    "wires": [["simulacion"]]
+  },
+  {
+    "id": "simulacion",
+    "type": "function",
+    "name": "Simular tanque",
+    "func": "let nivel = context.get('nivel') || 50;\nlet bomba = context.get('bomba') || false;\n\nif (bomba) {\n    nivel += 5;\n} else {\n    nivel -= 2;\n}\n\nnivel = Math.max(0, Math.min(100, nivel));\n\ncontext.set('nivel', nivel);\n\nmsg.payload = {\n    nivel: nivel,\n    bomba: bomba\n};\n\nreturn msg;",
+    "wires": [["control"]]
+  },
+  {
+    "id": "control",
+    "type": "function",
+    "name": "Control ON/OFF",
+    "func": "let nivel = msg.payload.nivel;\nlet bomba = msg.payload.bomba;\n\nif (nivel < 30) {\n    bomba = true;\n}\nif (nivel > 80) {\n    bomba = false;\n}\n\ncontext.set('bomba', bomba);\n\nmsg.payload.bomba = bomba;\nreturn msg;",
+    "wires": [["debug"]]
+  },
+  {
+    "id": "debug",
+    "type": "debug",
+    "name": "Estado",
+    "active": true,
+    "complete": "payload"
+  }
+]

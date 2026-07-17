@@ -1,0 +1,106 @@
+[
+    {
+        "id": "broker_local",
+        "type": "mqtt-broker",
+        "name": "Broker local (Mosquitto)",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "keepalive": "60",
+        "cleansession": true
+    },
+    {
+        "id": "dashboard_base",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light"
+        }
+    },
+    {
+        "id": "dashboard_tab",
+        "type": "ui_tab",
+        "name": "OCR + MQTT",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "dashboard_group",
+        "type": "ui_group",
+        "name": "Lector de dígitos (OCR)",
+        "tab": "dashboard_tab",
+        "order": 1,
+        "width": "6"
+    },
+    {
+        "id": "mqtt_in_digito",
+        "type": "mqtt in",
+        "name": "Suscripción ocr/digito",
+        "topic": "ocr/digito",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "broker_local",
+        "wires": [["parsear_payload", "debug_digito"]]
+    },
+    {
+        "id": "parsear_payload",
+        "type": "function",
+        "name": "Extraer dígito y timestamp",
+        "func": "// El payload llega como { digito: N, timestamp: ... }\nconst digito = msg.payload.digito;\nconst timestamp = msg.payload.timestamp;\n\n// Un mensaje para el gauge (último dígito)\nconst msgGauge = { payload: digito };\n\n// Un mensaje para el chart (historial en el tiempo)\nconst msgChart = { payload: digito, topic: \"digito\" };\n\n// Un mensaje para el texto (info legible)\nconst fecha = new Date(timestamp * 1000).toLocaleTimeString();\nconst msgTexto = { payload: `Último dígito: ${digito} (recibido a las ${fecha})` };\n\nreturn [msgGauge, msgChart, msgTexto];",
+        "outputs": 3,
+        "wires": [["gauge_digito"], ["chart_digitos"], ["texto_estado"]]
+    },
+    {
+        "id": "gauge_digito",
+        "type": "ui_gauge",
+        "name": "Último dígito",
+        "group": "dashboard_group",
+        "order": 1,
+        "gtype": "gage",
+        "title": "Último dígito leído",
+        "label": "dígito",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 9,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "wires": []
+    },
+    {
+        "id": "chart_digitos",
+        "type": "ui_chart",
+        "name": "Historial de dígitos",
+        "group": "dashboard_group",
+        "order": 2,
+        "chartType": "line",
+        "label": "Historial",
+        "xformat": "HH:mm:ss",
+        "ymin": "0",
+        "ymax": "9",
+        "removeOlder": "5",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "wires": [[]]
+    },
+    {
+        "id": "texto_estado",
+        "type": "ui_text",
+        "name": "Estado en texto",
+        "group": "dashboard_group",
+        "order": 3,
+        "label": "Estado",
+        "format": "{{msg.payload}}",
+        "wires": []
+    },
+    {
+        "id": "debug_digito",
+        "type": "debug",
+        "name": "Debug OCR",
+        "active": true,
+        "complete": "payload",
+        "wires": []
+    }
+]
