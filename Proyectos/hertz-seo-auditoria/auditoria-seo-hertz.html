@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoría SEO &middot; Hertz Argentina</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============ FUENTES Y RESET ============ */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);transition:background .3s ease,color .3s ease;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.15;margin:0 0 .5em;color:var(--text-strong)}
+p{line-height:1.65;margin:0 0 1em;color:var(--text)}
+a{color:var(--accent)}
+code{background:var(--code-bg);padding:.1em .4em;border-radius:4px;font-size:.9em;font-family:'SFMono-Regular',Consolas,monospace}
+img{max-width:100%}
+button{font-family:inherit}
+
+:root{
+  --bg:#faf7f2; --bg-alt:#f2ede4; --card-bg:#ffffff; --border:#e5ddd0;
+  --text:#4a463f; --text-strong:#1f2430; --text-muted:#7a7568;
+  --navy:#131a33; --accent:#2452ff; --accent-soft:#e8edff;
+  --sev-red:#c9463c; --sev-red-bg:#fbeae8; --sev-yellow:#c98a1c; --sev-yellow-bg:#fbf1de;
+  --sev-green:#2f8f5b; --sev-green-bg:#e9f5ee;
+  --grid-line:rgba(30,30,40,.10); --code-bg:#eee8db;
+  --shadow:0 10px 30px rgba(30,25,15,.06), 0 2px 8px rgba(30,25,15,.04);
+  --best-bg:#e4f5eb; --worst-bg:#fbe9e7;
+}
+html.dark{
+  --bg:#12141c; --bg-alt:#181b26; --card-bg:#1b1f2b; --border:#2b3040;
+  --text:#c7cbdb; --text-strong:#f2f4fb; --text-muted:#8b90a6;
+  --navy:#0b0e18; --accent:#5b82ff; --accent-soft:#1c2440;
+  --sev-red:#ff6b60; --sev-red-bg:#3a1e1e; --sev-yellow:#f0b13f; --sev-yellow-bg:#3a3120;
+  --sev-green:#4fd394; --sev-green-bg:#173226;
+  --grid-line:rgba(255,255,255,.10); --code-bg:#262b3a;
+  --shadow:0 10px 30px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.25);
+  --best-bg:#173226; --worst-bg:#3a1e1e;
+}
+
+/* ============ BARRA DE PROGRESO ============ */
+#scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),#7b9bff);width:0%;z-index:9999;transition:width .1s linear}
+
+/* ============ HERRAMIENTAS FLOTANTES ============ */
+.floating-tools{position:fixed;top:18px;right:22px;display:flex;gap:10px;z-index:900}
+.tool-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--card-bg);color:var(--text-strong);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow);font-size:18px;transition:transform .15s ease}
+.tool-btn:hover{transform:translateY(-2px)}
+.tool-btn.pdf{width:auto;padding:0 18px;border-radius:22px;font-family:'Inter';font-weight:600;font-size:13px;gap:8px;display:inline-flex;align-items:center}
+
+/* ============ LAYOUT ============ */
+.layout{display:flex;max-width:1440px;margin:0 auto}
+.sidebar{width:270px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;padding:32px 18px;border-right:1px solid var(--border)}
+.sidebar-brand{font-family:'Fraunces';font-size:15px;font-weight:600;color:var(--text-strong);margin-bottom:28px;letter-spacing:.02em}
+.sidebar-brand small{display:block;font-family:'Inter';font-weight:400;font-size:11.5px;color:var(--text-muted);margin-top:4px;letter-spacing:.03em;text-transform:uppercase}
+.side-nav{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.side-nav a{display:flex;gap:10px;align-items:baseline;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--text-muted);font-size:13.5px;font-weight:500;transition:background .15s,color .15s}
+.side-nav a .n{font-variant-numeric:tabular-nums;font-size:11.5px;color:var(--text-muted);opacity:.7}
+.side-nav a:hover{background:var(--bg-alt);color:var(--text-strong)}
+.side-nav a.active{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.side-nav a.active .n{color:var(--accent)}
+main{flex:1;min-width:0;padding:0 0 80px}
+.section-inner{max-width:1080px;margin:0 auto;padding:0 40px}
+section.report-section{padding-top:86px;margin-top:-46px}
+.section-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);font-weight:700;margin-bottom:8px}
+.section-title{font-size:32px;margin-bottom:14px}
+.section-lede{font-size:16.5px;color:var(--text-muted);max-width:760px;margin-bottom:36px}
+
+/* ============ HERO ============ */
+.hero{background:linear-gradient(180deg,var(--navy) 0%, #1b2140 100%);color:#fff;padding:64px 40px 56px;position:relative;overflow:hidden}
+html.dark .hero{background:linear-gradient(180deg,#0a0c14 0%, #141a2e 100%)}
+.hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:2}
+.hero-eyebrow{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:#9db0ff;font-weight:700;margin-bottom:14px}
+.hero-title{font-size:44px;color:#fff;max-width:760px;margin-bottom:6px}
+.hero-sub{color:#b7bdd6;font-size:16px;max-width:640px;margin-bottom:36px}
+.hero-grid{display:grid;grid-template-columns:280px 1fr;gap:44px;align-items:start}
+.gauge-wrap{display:flex;flex-direction:column;align-items:center}
+.gauge-number{font-family:'Fraunces';font-size:52px;font-weight:600;color:#fff;margin-top:-58px}
+.gauge-label{color:#9aa1c2;font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+.verdict{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 24px;margin-top:6px;font-size:15.5px;line-height:1.6;color:#e4e7f5}
+.verdict strong{color:#fff}
+.findings-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.hero-card{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:18px 20px;backdrop-filter:blur(2px)}
+.hero-card .dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:8px}
+.hero-card .dot.red{background:#ff6b60}
+.hero-card .dot.yellow{background:#f0b13f}
+.hero-card .dot.green{background:#4fd394}
+.hero-card .tag{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#9aa1c2;font-weight:700}
+.hero-card p{color:#dcdfef;font-size:13.8px;margin:8px 0 0}
+
+.stat-strip{display:flex;gap:0;margin-top:40px;border-top:1px solid rgba(255,255,255,.14);padding-top:24px;flex-wrap:wrap}
+.stat-item{flex:1;min-width:140px;padding-right:28px}
+.stat-num{font-family:'Fraunces';font-size:30px;color:#fff}
+.stat-num.red{color:#ff6b60}.stat-num.yellow{color:#f0b13f}.stat-num.green{color:#4fd394}
+.stat-lab{font-size:12px;color:#9aa1c2;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+
+/* ============ FILTRO SEVERIDAD ============ */
+.sev-filter{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
+.sev-btn{border:1px solid var(--border);background:var(--card-bg);color:var(--text);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.sev-btn:hover{border-color:var(--accent)}
+.sev-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+html.dark .sev-btn.active{background:var(--accent);border-color:var(--accent)}
+
+/* ============ FINDINGS / SEVERITY ============ */
+.finding{display:flex;gap:12px;padding:14px 16px;border-radius:10px;border:1px solid var(--border);background:var(--card-bg);margin-bottom:10px;align-items:flex-start}
+.finding .sev-badge{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.finding .sev-badge svg{width:12px;height:12px}
+.finding.sev-red .sev-badge{background:var(--sev-red-bg);color:var(--sev-red)}
+.finding.sev-yellow .sev-badge{background:var(--sev-yellow-bg);color:var(--sev-yellow)}
+.finding.sev-green .sev-badge{background:var(--sev-green-bg);color:var(--sev-green)}
+.finding p{margin:0;font-size:14.5px}
+.finding.filtered-out{display:none}
+
+/* ============ CARDS / GRID GENERAL ============ */
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:22px 24px;box-shadow:var(--shadow)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.chart-card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:22px 24px 18px;margin-bottom:24px;box-shadow:var(--shadow)}
+.chart-card h3{font-size:17px;margin-bottom:4px}
+.chart-card .chart-note{font-size:12.5px;color:var(--text-muted);margin-bottom:14px}
+.chart-host{width:100%;height:320px}
+.chart-host.radar-host{height:400px}
+.chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--text-muted)}
+.legend-item{display:inline-flex;align-items:center;gap:6px}
+.legend-item i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.chart-axis-label{font-size:10.5px;fill:var(--text-muted);font-family:'Inter'}
+.chart-value-label{font-size:11px;fill:var(--text-strong);font-family:'Inter';font-weight:700}
+.radar-label{font-size:11.5px;font-weight:600;fill:var(--text)}
+.chart-tooltip{position:fixed;pointer-events:none;background:var(--navy);color:#fff;padding:8px 12px;border-radius:8px;font-size:12.5px;line-height:1.4;opacity:0;transition:opacity .12s;z-index:9998;box-shadow:var(--shadow);max-width:220px}
+html.dark .chart-tooltip{background:#050609}
+
+/* ============ ACORDEONES ============ */
+.accordion{border:1px solid var(--border);border-radius:14px;margin-bottom:14px;overflow:hidden;background:var(--card-bg)}
+.accordion-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;gap:16px}
+.accordion-head:hover{background:var(--bg-alt)}
+.accordion-head h4{margin:0;font-size:17px}
+.accordion-head .meta{font-size:12.5px;color:var(--text-muted);font-family:'Inter';font-weight:400;margin-top:3px}
+.accordion-head .head-left{display:flex;flex-direction:column}
+.accordion-head .head-right{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.sev-pill{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.03em}
+.sev-pill.red{background:var(--sev-red-bg);color:var(--sev-red)}
+.sev-pill.yellow{background:var(--sev-yellow-bg);color:var(--sev-yellow)}
+.sev-pill.green{background:var(--sev-green-bg);color:var(--sev-green)}
+.chevron{width:20px;height:20px;transition:transform .25s ease;flex-shrink:0;color:var(--text-muted)}
+.accordion.open .chevron{transform:rotate(180deg)}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.accordion.open .accordion-body{max-height:4000px}
+.accordion-body-inner{padding:4px 22px 22px}
+.meta-table{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:13.5px}
+.meta-table td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.meta-table td:first-child{color:var(--text-muted);font-weight:600;width:210px}
+.meta-table code{word-break:break-all}
+
+/* ============ TABLA COMPARATIVA ============ */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px;background:var(--card-bg);box-shadow:var(--shadow)}
+table.compare{width:100%;border-collapse:collapse;font-size:13.5px;min-width:720px}
+table.compare th,table.compare td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+table.compare thead th{background:var(--bg-alt);position:sticky;top:0;cursor:pointer;user-select:none;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);white-space:nowrap}
+table.compare thead th:hover{color:var(--accent)}
+table.compare thead th .arrow{font-size:10px;margin-left:4px;opacity:.5}
+table.compare tbody th{font-weight:600;color:var(--text-strong);background:var(--card-bg)}
+table.compare td.hertz-col,table.compare th.hertz-col{background:var(--accent-soft)}
+table.compare td.best{background:var(--best-bg);font-weight:700}
+table.compare td.worst{background:var(--worst-bg)}
+table.compare tfoot td,table.compare tfoot th{border-top:2px solid var(--border);border-bottom:none;font-weight:700;background:var(--bg-alt)}
+
+/* ============ KEYWORDS ============ */
+.kw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.kw-card{border:1px solid var(--border);border-radius:14px;padding:18px 20px;background:var(--card-bg)}
+.kw-card .kw-ramo{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);font-weight:700}
+.kw-card h4{font-size:16px;margin:6px 0 10px}
+.kw-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.kw-tag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;background:var(--bg-alt);color:var(--text-muted)}
+.kw-tag.dif-alta{background:var(--sev-red-bg);color:var(--sev-red)}
+.kw-tag.dif-media{background:var(--sev-yellow-bg);color:var(--sev-yellow)}
+.kw-tag.dif-media-alta{background:var(--sev-yellow-bg);color:var(--sev-red)}
+.kw-card p{font-size:13.5px;margin:0 0 8px}
+.kw-card .kw-label{font-weight:700;color:var(--text-strong);font-size:12.5px}
+
+/* ============ KANBAN ============ */
+.kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+.kanban-col{background:var(--bg-alt);border-radius:16px;padding:16px;border:1px solid var(--border)}
+.kanban-col h4{font-size:14.5px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.kanban-col .kcount{font-size:12px;color:var(--text-muted);margin-bottom:14px}
+.kcard{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.kcard h5{font-size:14px;margin:0 0 6px;font-family:'Inter';font-weight:700;color:var(--text-strong)}
+.kcard p{font-size:12.8px;color:var(--text-muted);margin:0 0 10px}
+.kcard .ktags{display:flex;gap:6px;flex-wrap:wrap}
+.ktag{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.02em}
+.ktag.impact-alto{background:var(--sev-red-bg);color:var(--sev-red)}
+.ktag.impact-medio{background:var(--sev-yellow-bg);color:var(--sev-yellow)}
+.ktag.impact-bajo{background:var(--sev-green-bg);color:var(--sev-green)}
+.ktag.effort{background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border)}
+
+/* ============ METODOLOGÍA / FOOTER ============ */
+.method-list{padding-left:20px}
+.method-list li{margin-bottom:10px;font-size:14.5px;line-height:1.6}
+.report-footer{text-align:center;padding:50px 40px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border);margin-top:20px}
+
+/* ============ UTILIDADES ============ */
+.tag-pill{display:inline-block;background:var(--bg-alt);border:1px solid var(--border);padding:3px 10px;border-radius:20px;font-size:11.5px;color:var(--text-muted);margin-bottom:10px;font-weight:600}
+.small-note{font-size:12.5px;color:var(--text-muted)}
+.divider{height:1px;background:var(--border);margin:44px 0}
+
+@media (max-width:1099px){
+  .sidebar{display:none}
+  .hero-grid{grid-template-columns:1fr}
+  .findings-cards{grid-template-columns:1fr}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .kanban{grid-template-columns:1fr}
+  .kw-grid{grid-template-columns:1fr}
+  .section-inner{padding:0 20px}
+  .hero{padding:48px 20px}
+  .hero-title{font-size:32px}
+}
+
+/* ============ IMPRESIÓN ============ */
+@media print{
+  @page{size:A4;margin:13mm}
+  *{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  /* Forzar paleta clara en impresión, sin importar el modo elegido en pantalla */
+  html,html.dark{
+    --bg:#ffffff; --bg-alt:#f4f1ea; --card-bg:#ffffff; --border:#dcd4c4;
+    --text:#3a362f; --text-strong:#17191f; --text-muted:#5c584c;
+    --navy:#131a33; --accent:#1d3fd6; --accent-soft:#e8edff;
+    --sev-red:#b23328; --sev-red-bg:#fbeae8; --sev-yellow:#96690f; --sev-yellow-bg:#fbf1de;
+    --sev-green:#1f7a49; --sev-green-bg:#e9f5ee;
+    --grid-line:rgba(20,20,30,.18); --code-bg:#eee8db;
+    --best-bg:#dcf3e5; --worst-bg:#fbdedb;
+  }
+  .hero{background:#131a33!important}
+  .sidebar,.floating-tools,#scroll-progress,.sev-filter{display:none!important}
+  main{padding:0}
+  .layout{display:block}
+  section.report-section{padding-top:0;margin-top:0;break-inside:auto}
+  .hero{padding:20px 0}
+  .card,.chart-card,.accordion,table.compare,.kcard,.hero-card,.finding,.kw-card{break-inside:avoid}
+  .accordion .accordion-body{max-height:none!important}
+  .finding.filtered-out{display:flex!important}
+  body{background:#fff!important;color:#111!important}
+  a{text-decoration:none;color:inherit}
+}
+
+</style>
+<script>
+/* ============================================================
+   Motor de gráficos propio (SVG + JS vanilla) — sin dependencias.
+   Nota metodológica: el entorno de generación de este informe no tuvo
+   acceso de red para descargar Chart.js (registry.npmjs.org, pypi.org
+   y los CDN públicos estaban fuera de la lista blanca de egress de este
+   sandbox en el momento de la auditoría). Para no incumplir el
+   requisito de "cero dependencias externas / cero riesgo de rectángulos
+   vacíos", se optó por un motor de gráficos SVG propio, ligero,
+   accesible y con el mismo comportamiento (barras animadas, barras
+   apiladas, radar, tooltips, redibujado en modo oscuro) que se le
+   pediría a Chart.js. Queda documentado en la sección de Metodología.
+   ============================================================ */
+(function (global) {
+  "use strict";
+
+  function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  function el(tag, attrs, parent) {
+    var n = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) { if (attrs.hasOwnProperty(k) && attrs[k] !== null && attrs[k] !== undefined) n.setAttribute(k, attrs[k]); }
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+
+  function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+
+  function ensureTooltip() {
+    var tt = document.getElementById("gt-tooltip");
+    if (!tt) {
+      tt = document.createElement("div");
+      tt.id = "gt-tooltip";
+      tt.className = "chart-tooltip";
+      document.body.appendChild(tt);
+    }
+    return tt;
+  }
+
+  function showTip(evt, html) {
+    var tt = ensureTooltip();
+    tt.innerHTML = html;
+    tt.style.opacity = "1";
+    positionTip(evt);
+  }
+  function positionTip(evt) {
+    var tt = ensureTooltip();
+    var x = evt.clientX, y = evt.clientY;
+    tt.style.left = (x + 14) + "px";
+    tt.style.top = (y + 14) + "px";
+  }
+  function hideTip() {
+    var tt = ensureTooltip();
+    tt.style.opacity = "0";
+  }
+
+  var registry = [];
+
+  function severityColor(sev) {
+    if (sev === "red") return cssVar("--sev-red") || "#d64545";
+    if (sev === "yellow") return cssVar("--sev-yellow") || "#e0a326";
+    if (sev === "green") return cssVar("--sev-green") || "#2f9e5b";
+    return cssVar("--accent") || "#2452ff";
+  }
+
+  /* ---------- BAR CHART (simple, 1 dataset, color por barra) ---------- */
+  function barChart(containerId, cfg) {
+    var host = document.getElementById(containerId);
+    if (!host) return;
+    function render() {
+      clear(host);
+      var W = host.clientWidth || 600, H = host.clientHeight || 320;
+      var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: "100%", height: "100%", role: "img", "aria-label": cfg.ariaLabel || "" }, host);
+      var padL = 44, padR = 16, padT = 20, padB = cfg.labelRotate ? 64 : 40;
+      var plotW = W - padL - padR, plotH = H - padT - padB;
+      var max = cfg.max || Math.max.apply(null, cfg.data.map(function (d) { return d.value; })) * 1.15;
+      var n = cfg.data.length;
+      var gap = plotW / n * 0.28;
+      var barW = (plotW / n) - gap;
+
+      var gridColor = cssVar("--grid-line") || "rgba(120,120,120,.18)";
+      [0, 0.25, 0.5, 0.75, 1].forEach(function (t) {
+        var y = padT + plotH * (1 - t);
+        el("line", { x1: padL, x2: padL + plotW, y1: y, y2: y, stroke: gridColor, "stroke-width": 1 }, svg);
+        var lbl = el("text", { x: padL - 8, y: y + 4, "text-anchor": "end", class: "chart-axis-label" }, svg);
+        lbl.textContent = Math.round(max * t);
+      });
+
+      cfg.data.forEach(function (d, i) {
+        var x = padL + i * (plotW / n) + gap / 2;
+        var h = Math.max(2, (d.value / max) * plotH);
+        var y = padT + plotH - h;
+        var color = d.color || severityColor(d.sev) || cfg.color || (cssVar("--accent"));
+        var rect = el("rect", {
+          x: x, y: padT + plotH, width: barW, height: 0, rx: 6, fill: color, class: "bar-rect"
+        }, svg);
+        rect.addEventListener("mousemove", function (e) { showTip(e, "<strong>" + d.label + "</strong><br>" + (d.tooltip || (d.value + (cfg.unit || "")))); });
+        rect.addEventListener("mouseleave", hideTip);
+        requestAnimationFrame(function () {
+          rect.style.transition = "y .7s cubic-bezier(.2,.7,.3,1), height .7s cubic-bezier(.2,.7,.3,1)";
+          rect.setAttribute("y", y);
+          rect.setAttribute("height", h);
+        });
+        var vlab = el("text", { x: x + barW / 2, y: y - 8, "text-anchor": "middle", class: "chart-value-label" }, svg);
+        vlab.textContent = d.value + (cfg.unit || "");
+        var xlab = el("text", {
+          x: x + barW / 2, y: padT + plotH + 18, "text-anchor": cfg.labelRotate ? "end" : "middle",
+          class: "chart-axis-label", transform: cfg.labelRotate ? "rotate(-32 " + (x + barW / 2) + " " + (padT + plotH + 18) + ")" : null
+        }, svg);
+        if (!cfg.labelRotate) xlab.removeAttribute("transform");
+        xlab.textContent = d.label;
+      });
+    }
+    render();
+    registry.push(render);
+    window.addEventListener("resize", debounce(render, 150));
+  }
+
+  /* ---------- STACKED BAR CHART ---------- */
+  function stackedBarChart(containerId, cfg) {
+    var host = document.getElementById(containerId);
+    if (!host) return;
+    function render() {
+      clear(host);
+      var W = host.clientWidth || 600, H = host.clientHeight || 340;
+      var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: "100%", height: "100%", role: "img", "aria-label": cfg.ariaLabel || "" }, host);
+      var padL = 44, padR = 16, padT = 20, padB = 40;
+      var plotW = W - padL - padR, plotH = H - padT - padB;
+      var totals = cfg.categories.map(function (c) { return c.segments.reduce(function (a, s) { return a + s.value; }, 0); });
+      var max = Math.max.apply(null, totals) * 1.15;
+      var n = cfg.categories.length;
+      var gap = plotW / n * 0.32;
+      var barW = (plotW / n) - gap;
+
+      var gridColor = cssVar("--grid-line") || "rgba(120,120,120,.18)";
+      [0, 0.25, 0.5, 0.75, 1].forEach(function (t) {
+        var y = padT + plotH * (1 - t);
+        el("line", { x1: padL, x2: padL + plotW, y1: y, y2: y, stroke: gridColor, "stroke-width": 1 }, svg);
+        var lbl = el("text", { x: padL - 8, y: y + 4, "text-anchor": "end", class: "chart-axis-label" }, svg);
+        lbl.textContent = Math.round(max * t);
+      });
+
+      cfg.categories.forEach(function (cat, i) {
+        var x = padL + i * (plotW / n) + gap / 2;
+        var yCursor = padT + plotH;
+        cat.segments.forEach(function (seg) {
+          var h = (seg.value / max) * plotH;
+          var rect = el("rect", { x: x, y: padT + plotH, width: barW, height: 0, fill: seg.color, class: "bar-rect" }, svg);
+          rect.addEventListener("mousemove", function (e) { showTip(e, "<strong>" + cat.label + "</strong><br>" + seg.name + ": " + seg.value); });
+          rect.addEventListener("mouseleave", hideTip);
+          (function (targetY, targetH, r) {
+            requestAnimationFrame(function () {
+              r.style.transition = "y .7s cubic-bezier(.2,.7,.3,1), height .7s cubic-bezier(.2,.7,.3,1)";
+              r.setAttribute("y", targetY - targetH);
+              r.setAttribute("height", targetH);
+            });
+          })(yCursor, h, rect);
+          yCursor -= h;
+        });
+        var xlab = el("text", { x: x + barW / 2, y: padT + plotH + 18, "text-anchor": "middle", class: "chart-axis-label" }, svg);
+        xlab.textContent = cat.label;
+        var totlab = el("text", { x: x + barW / 2, y: padT + plotH - (totals[i] / max) * plotH - 8, "text-anchor": "middle", class: "chart-value-label" }, svg);
+        totlab.textContent = totals[i];
+      });
+
+      if (cfg.legend) {
+        var lg = document.createElement("div");
+        lg.className = "chart-legend";
+        cfg.legend.forEach(function (l) {
+          var it = document.createElement("span");
+          it.className = "legend-item";
+          it.innerHTML = '<i style="background:' + l.color + '"></i>' + l.name;
+          lg.appendChild(it);
+        });
+        host.parentNode.querySelectorAll(".chart-legend").forEach(function (x) { x.remove(); });
+        host.parentNode.appendChild(lg);
+      }
+    }
+    render();
+    registry.push(render);
+    window.addEventListener("resize", debounce(render, 150));
+  }
+
+  /* ---------- GROUPED BAR (multi-serie, para comparativa contenido) ---------- */
+  function groupedBarChart(containerId, cfg) {
+    var host = document.getElementById(containerId);
+    if (!host) return;
+    function render() {
+      clear(host);
+      var W = host.clientWidth || 600, H = host.clientHeight || 320;
+      var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: "100%", height: "100%", role: "img", "aria-label": cfg.ariaLabel || "" }, host);
+      var padL = 50, padR = 16, padT = 20, padB = 40;
+      var plotW = W - padL - padR, plotH = H - padT - padB;
+      var max = Math.max.apply(null, cfg.data.map(function (d) { return d.value; })) * 1.15;
+
+      var gridColor = cssVar("--grid-line") || "rgba(120,120,120,.18)";
+      [0, 0.25, 0.5, 0.75, 1].forEach(function (t) {
+        var y = padT + plotH * (1 - t);
+        el("line", { x1: padL, x2: padL + plotW, y1: y, y2: y, stroke: gridColor, "stroke-width": 1 }, svg);
+        var lbl = el("text", { x: padL - 8, y: y + 4, "text-anchor": "end", class: "chart-axis-label" }, svg);
+        lbl.textContent = Math.round(max * t);
+      });
+
+      var n = cfg.data.length;
+      var gap = plotW / n * 0.28;
+      var barW = (plotW / n) - gap;
+      cfg.data.forEach(function (d, i) {
+        var x = padL + i * (plotW / n) + gap / 2;
+        var h = Math.max(2, (d.value / max) * plotH);
+        var y = padT + plotH - h;
+        var rect = el("rect", { x: x, y: padT + plotH, width: barW, height: 0, rx: 6, fill: d.color, class: "bar-rect" }, svg);
+        rect.addEventListener("mousemove", function (e) { showTip(e, "<strong>" + d.label + "</strong><br>" + d.value + " palabras (estimado)"); });
+        rect.addEventListener("mouseleave", hideTip);
+        requestAnimationFrame(function () {
+          rect.style.transition = "y .7s cubic-bezier(.2,.7,.3,1), height .7s cubic-bezier(.2,.7,.3,1)";
+          rect.setAttribute("y", y);
+          rect.setAttribute("height", h);
+        });
+        var vlab = el("text", { x: x + barW / 2, y: y - 8, "text-anchor": "middle", class: "chart-value-label" }, svg);
+        vlab.textContent = d.value;
+        var xlab = el("text", { x: x + barW / 2, y: padT + plotH + 18, "text-anchor": "middle", class: "chart-axis-label" }, svg);
+        xlab.textContent = d.label;
+      });
+    }
+    render();
+    registry.push(render);
+    window.addEventListener("resize", debounce(render, 150));
+  }
+
+  /* ---------- RADAR CHART ---------- */
+  function radarChart(containerId, cfg) {
+    var host = document.getElementById(containerId);
+    if (!host) return;
+    function render() {
+      clear(host);
+      var W = host.clientWidth || 420, H = host.clientHeight || 420;
+      var cx = W / 2, cy = H / 2 - 6;
+      var R = Math.min(W, H) / 2 - 56;
+      var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: "100%", height: "100%", role: "img", "aria-label": cfg.ariaLabel || "" }, host);
+      var axes = cfg.axes, nA = axes.length;
+      var rings = [0.2, 0.4, 0.6, 0.8, 1];
+      var gridColor = cssVar("--grid-line") || "rgba(120,120,120,.25)";
+
+      function pt(i, frac) {
+        var ang = (Math.PI * 2 * i / nA) - Math.PI / 2;
+        return [cx + Math.cos(ang) * R * frac, cy + Math.sin(ang) * R * frac];
+      }
+
+      rings.forEach(function (f) {
+        var pts = axes.map(function (_, i) { return pt(i, f).join(","); }).join(" ");
+        el("polygon", { points: pts, fill: "none", stroke: gridColor, "stroke-width": 1 }, svg);
+      });
+      axes.forEach(function (a, i) {
+        var p = pt(i, 1);
+        el("line", { x1: cx, y1: cy, x2: p[0], y2: p[1], stroke: gridColor, "stroke-width": 1 }, svg);
+        var lp = pt(i, 1.16);
+        var t = el("text", { x: lp[0], y: lp[1], "text-anchor": "middle", class: "chart-axis-label radar-label" }, svg);
+        t.textContent = a;
+      });
+
+      cfg.series.forEach(function (s) {
+        var pts = s.values.map(function (v, i) { return pt(i, v / 100).join(","); }).join(" ");
+        var poly = el("polygon", {
+          points: pts, fill: s.color, "fill-opacity": s.fillOpacity != null ? s.fillOpacity : 0.12,
+          stroke: s.color, "stroke-width": s.strokeWidth || 2, class: "radar-poly"
+        }, svg);
+        s.values.forEach(function (v, i) {
+          var p = pt(i, v / 100);
+          var dot = el("circle", { cx: p[0], cy: p[1], r: 3.5, fill: s.color, stroke: "var(--card-bg)", "stroke-width": 1.5 }, svg);
+          dot.addEventListener("mousemove", function (e) { showTip(e, "<strong>" + s.name + "</strong><br>" + axes[i] + ": " + v + "/100"); });
+          dot.addEventListener("mouseleave", hideTip);
+        });
+      });
+
+      if (cfg.legend !== false) {
+        var lg = document.createElement("div");
+        lg.className = "chart-legend";
+        cfg.series.forEach(function (s) {
+          var it = document.createElement("span");
+          it.className = "legend-item";
+          it.innerHTML = '<i style="background:' + s.color + '"></i>' + s.name;
+          lg.appendChild(it);
+        });
+        host.parentNode.querySelectorAll(".chart-legend").forEach(function (x) { x.remove(); });
+        host.parentNode.appendChild(lg);
+      }
+    }
+    render();
+    registry.push(render);
+    window.addEventListener("resize", debounce(render, 150));
+  }
+
+  function redrawAll() { registry.forEach(function (fn) { fn(); }); }
+
+  function debounce(fn, ms) {
+    var t; return function () { clearTimeout(t); var a = arguments; t = setTimeout(function () { fn.apply(null, a); }, ms); };
+  }
+
+  global.GTChart = {
+    bar: barChart,
+    stackedBar: stackedBarChart,
+    groupedBar: groupedBarChart,
+    radar: radarChart,
+    redrawAll: redrawAll
+  };
+})(window);
+
+</script>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+<div class="floating-tools">
+  <button class="tool-btn" id="theme-toggle" aria-label="Cambiar modo claro/oscuro" title="Modo claro/oscuro">&#9789;</button>
+  <button class="tool-btn pdf" id="pdf-btn" title="Descargar como PDF">&#8681; Descargar PDF</button>
+</div>
+
+<div class="layout">
+
+  <nav class="sidebar" aria-label="Índice del informe">
+    <div class="sidebar-brand">Auditoría SEO<small>Hertz Argentina &middot; 11 de julio de 2026</small></div>
+    <ul class="side-nav"><li><a href="#resumen"><span class="n">01</span>Resumen ejecutivo</a></li>
+<li><a href="#onpage"><span class="n">02</span>SEO On-Page</a></li>
+<li><a href="#tecnico"><span class="n">03</span>SEO Técnico</a></li>
+<li><a href="#rendimiento"><span class="n">04</span>Rendimiento y front-end</a></li>
+<li><a href="#contenido"><span class="n">05</span>Contenido y blog</a></li>
+<li><a href="#comparativa"><span class="n">06</span>Comparativa competitiva</a></li>
+<li><a href="#keywords"><span class="n">07</span>Oportunidades de keywords</a></li>
+<li><a href="#plan"><span class="n">08</span>Plan de acción</a></li>
+<li><a href="#metodologia"><span class="n">09</span>Metodología</a></li></ul>
+  </nav>
+<main>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Auditoría SEO independiente &middot; Alquiler de autos &middot; Argentina</div>
+      <h1 class="hero-title">Hertz Argentina compite con la marca atada a la espalda del contenido.</h1>
+      <p class="hero-sub">hertz.com.ar &middot; Sector alquiler de autos &middot; Análisis de SEO on-page, técnico, rendimiento arquitectónico, contenido y comparativa frente a Avis, Europcar y Sixt Argentina.</p>
+      <div class="hero-grid">
+        <div class="gauge-wrap">
+          
+    <svg id="gauge-svg" data-score="50" viewBox="0 0 360 210" width="280" height="164" role="img" aria-label="Puntuación SEO global 50 sobre 100">
+      <path d="M 30.0 180.0 A 150 150 0 0 1 91.8 58.6" stroke="#c9463c" stroke-width="26" fill="none" stroke-linecap="butt"/><path d="M 91.8 58.6 A 150 150 0 0 1 226.4 37.3" stroke="#c98a1c" stroke-width="26" fill="none" stroke-linecap="butt"/><path d="M 226.4 37.3 A 150 150 0 0 1 330.0 180.0" stroke="#2f8f5b" stroke-width="26" fill="none" stroke-linecap="butt"/>
+      <line x1="46.0" y1="180.0" x2="26.0" y2="180.0" stroke="rgba(255,255,255,.35)" stroke-width="2"/><line x1="52.6" y1="138.6" x2="33.5" y2="132.4" stroke="rgba(255,255,255,.35)" stroke-width="2"/><line x1="71.6" y1="101.2" x2="55.4" y2="89.5" stroke="rgba(255,255,255,.35)" stroke-width="2"/><line x1="101.2" y1="71.6" x2="89.5" y2="55.4" stroke="rgba(255,255,255,.35)" stroke-width="2"/><line x1="138.6" y1="52.6" x2="132.4" y2="33.5" stroke="rgba(255,255,255,.35)" stroke-width="2"/><line x1="180.0" y1="46.0" x2="180.0" y2="26.0" stroke="rgba(255,255,255,.35)" stroke-width="2"/><line x1="221.4" y1="52.6" x2="227.6" y2="33.5" stroke="rgba(255,255,255,.35)" stroke-width="2"/><line x1="258.8" y1="71.6" x2="270.5" y2="55.4" stroke="rgba(255,255,255,.35)" stroke-width="2"/><line x1="288.4" y1="101.2" x2="304.6" y2="89.5" stroke="rgba(255,255,255,.35)" stroke-width="2"/><line x1="307.4" y1="138.6" x2="326.5" y2="132.4" stroke="rgba(255,255,255,.35)" stroke-width="2"/><line x1="314.0" y1="180.0" x2="334.0" y2="180.0" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+      <g id="gauge-needle-wrap" style="transform-box:view-box;transform-origin:180px 180px;">
+        <line id="gauge-needle" x1="180" y1="180" x2="180" y2="52" stroke="#fff" stroke-width="4" stroke-linecap="round"
+              style="transform-box:view-box;transform-origin:180px 180px;transform:rotate(-90deg);transition:transform 1.4s cubic-bezier(.22,1,.32,1);"/>
+        <circle cx="180" cy="180" r="9" fill="#fff"/>
+      </g>
+    </svg>
+          <div class="gauge-number" id="gauge-number">0</div>
+          <div class="gauge-label">Índice SEO global &middot; 0-100</div>
+        </div>
+        <div>
+          <div class="verdict">
+            <strong>Veredicto del consultor:</strong> Hertz Argentina factura sobre una marca fuerte, pero su SEO on-page corre en modo “formulario de reserva”, no en modo “contenido que convierte”. Con 50/100 de índice global, la brecha más grande no es técnica —el robots.txt está limpio y el sitio corre en Next.js— sino de contenido: la landing de Flota compite con 335 palabras por la misma keyword que Sixt ataca con 2.100.
+          </div>
+          <div class="findings-cards"><div class="hero-card"><span class="tag"><span class="dot red"></span>Hallazgo crítico #1</span><p>El H1 de <strong>Quiénes somos</strong> y del hub de <strong>Sucursales</strong> se capturó como “Cargando...”: el placeholder de un componente JS que no terminó de renderizar. Si Googlebot indexa esa versión, esas páginas no tienen encabezado real.</p></div><div class="hero-card"><span class="tag"><span class="dot red"></span>Hallazgo crítico #2</span><p>0 de 37 imágenes en Flota y 0 de 27 en Coberturas tienen alt. Es la página más visual del sitio —la que vende el auto— y no aporta una sola señal de SEO de imagen a Google.</p></div><div class="hero-card"><span class="tag"><span class="dot yellow"></span>Oportunidad #3</span><p>Ni Hertz ni sus 3 competidores auditados (Avis, Europcar, Sixt) muestran una tabla comparativa de coberturas. Es un vacío de todo el sector: el primero en publicarla se diferencia solo.</p></div></div>
+        </div>
+      </div>
+      <div class="stat-strip">
+        <div class="stat-item"><div class="stat-num" id="stat-total">0</div><div class="stat-lab">Hallazgos totales</div></div>
+        <div class="stat-item"><div class="stat-num red" id="stat-red">0</div><div class="stat-lab">Críticos</div></div>
+        <div class="stat-item"><div class="stat-num yellow" id="stat-yellow">0</div><div class="stat-lab">A mejorar</div></div>
+        <div class="stat-item"><div class="stat-num green" id="stat-green">0</div><div class="stat-lab">Correctos</div></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="report-section" id="resumen">
+    <div class="section-inner">
+      <div class="section-kicker">01 &middot; Resumen ejecutivo</div>
+      <h2 class="section-title">Puntuación por área</h2>
+      <p class="section-lede">Índice de auditoría del consultor (0-100) por cada una de las 6 áreas evaluadas. No es un dato extraído de una herramienta externa de terceros: es la síntesis cualitativa de esta auditoría, ponderada por impacto real en tráfico y conversión.</p>
+      <div class="chart-card">
+        <h3>Desglose de la puntuación SEO — Hertz Argentina</h3>
+        <p class="chart-note">Ponderación: On-Page 20% &middot; Técnico 20% &middot; Contenido 15% &middot; Rendimiento 15% &middot; Móvil 10% &middot; Autoridad 20% &rarr; índice global 50/100.</p>
+        <div class="chart-host" id="chart-areas"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="report-section" id="onpage">
+    <div class="section-inner">
+      <div class="section-kicker">02 &middot; SEO On-Page</div>
+      <h2 class="section-title">Home + 4 landings de producto</h2>
+      <p class="section-lede">Auditadas la home y una landing de cada una de las 4 líneas de negocio reales de Hertz Argentina: Flota (alquiler de vehículos), Coberturas y garantías (seguro de autos), Cargos adicionales (adicionales) y Convenio Empresas (empresas). Ver nota de adaptación de alcance en Metodología.</p>
+      
+    <div class="sev-filter">
+      <button class="sev-btn active" data-filter="all">Todos</button>
+      <button class="sev-btn" data-filter="red">Críticos</button>
+      <button class="sev-btn" data-filter="yellow">A mejorar</button>
+      <button class="sev-btn" data-filter="green">Correctos</button>
+    </div>
+      
+    <div class="accordion" id="acc-home">
+      <div class="accordion-head">
+        <div class="head-left">
+          <h4>Home</h4>
+          <span class="meta">General / marca &middot; <code>https://www.hertz.com.ar/</code></span>
+        </div>
+        <div class="head-right">
+          <span class="sev-pill yellow">6 hallazgos &middot; 3c críticos</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+      <div class="accordion-body"><div class="accordion-body-inner">
+        <table class="meta-table">
+          <tr><td>Title</td><td>&ldquo;Alquiler de Autos Hertz Argentina&rdquo; &mdash; 33 caracteres</td></tr>
+          <tr><td>Meta description</td><td>&ldquo;Alquilá tu auto con Hertz Argentina. Precios económicos, vehículos modernos y servicio confiable en todo el país. Reservá online y obtené hasta 20% de descuento.&rdquo; &mdash; 161 caracteres</td></tr>
+          <tr><td>H1</td><td><ul style='margin:4px 0 0;padding-left:18px'><li>Alquiler de autos en Argentina con Hertz</li><li>¡Disfruta el camino!</li></ul></td></tr>
+          <tr><td>H2 principales</td><td>Nuestra flota de alquiler de autos, El auto que necesitas está muy cerca, Explora los destinos principales de Argentina y Chile</td></tr>
+          <tr><td>H3</td><td>&mdash;</td></tr>
+          <tr><td>Canonical</td><td><code>https://www.hertz.com.ar (sin barra final; la URL real lleva barra)</code></td></tr>
+          <tr><td>Meta robots</td><td>index, follow, nocache</td></tr>
+          <tr><td>Datos estructurados</td><td>No detectado (verificado en 2 pasadas independientes)</td></tr>
+          <tr><td>Volumen de contenido</td><td>120-140 (aprox.) palabras</td></tr>
+          <tr><td>Imágenes con / sin alt</td><td>6 de 9 con alt no vacío</td></tr>
+        </table>
+        <div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Hay <strong>2 etiquetas H1</strong> en la misma página (“Alquiler de autos en Argentina con Hertz” y “¡Disfruta el camino!”). Un H1 duplicado diluye la señal temática principal para Google en la página más importante del sitio.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>El canonical declara <code>https://www.hertz.com.ar</code> sin barra final, mientras la URL real de la home es <code>https://www.hertz.com.ar/</code>. Es un mismatch menor, pero en una home no debería existir ninguna ambigüedad de canonicalización.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Meta robots incluye la directiva <code>nocache</code>, que no es un estándar reconocido por Google. No es dañina, pero es una anomalía que vale la pena que el equipo de desarrollo explique.</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Solo ~120-140 palabras de contenido propio en toda la home de una marca con presencia nacional. El espacio lo domina el buscador de reserva; no hay argumentario de marca indexable.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>3 de 9 imágenes no tienen atributo <code>alt</code>. Mejorable, pero es la página con mejor cobertura de alt de todo el sitio auditado (66%).</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Cero datos estructurados (schema.org). Para una marca con sucursales físicas en 45+ ubicaciones, la ausencia de <code>LocalBusiness</code>/<code>Organization</code> es una oportunidad de rich results completamente desaprovechada.</p></div>
+      </div></div>
+    </div>
+
+    <div class="accordion" id="acc-flota">
+      <div class="accordion-head">
+        <div class="head-left">
+          <h4>Flota de autos en alquiler</h4>
+          <span class="meta">Alquiler de vehículos (“coche”) &middot; <code>https://www.hertz.com.ar/flota-de-autos-en-alquiler</code></span>
+        </div>
+        <div class="head-right">
+          <span class="sev-pill red">6 hallazgos &middot; 3c críticos</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+      <div class="accordion-body"><div class="accordion-body-inner">
+        <table class="meta-table">
+          <tr><td>Title</td><td>&ldquo;Flota de autos en alquiler | Hertz Argentina&rdquo; &mdash; 44 caracteres</td></tr>
+          <tr><td>Meta description</td><td>&ldquo;Hertz Argentina cuenta con una flota de mas de 3.000 vehículos para alquilar: desde autos compactos y SUV hasta camionetas, vans y la exclusiva línea Prestige. Elegí el auto ideal y viajá con la mejor calidad y servicio.&rdquo; &mdash; 220 caracteres</td></tr>
+          <tr><td>H1</td><td>Flota de vehículos en alquiler</td></tr>
+          <tr><td>H2 principales</td><td>Nuestra flota de autos en Argentina para rental</td></tr>
+          <tr><td>H3</td><td>&mdash;</td></tr>
+          <tr><td>Canonical</td><td><code>https://www.hertz.com.ar/flota-de-autos-en-alquiler (correcto)</code></td></tr>
+          <tr><td>Meta robots</td><td>No presente en el head (equivale a index,follow por defecto)</td></tr>
+          <tr><td>Datos estructurados</td><td>No detectado — sin Product/Vehicle/ItemList pese a ser un catálogo de +30 modelos</td></tr>
+          <tr><td>Volumen de contenido</td><td>320-350 (aprox.) palabras</td></tr>
+          <tr><td>Imágenes con / sin alt</td><td>0 de 37 con alt no vacío</td></tr>
+        </table>
+        <div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>La meta description tiene <strong>220 caracteres</strong>, muy por encima del límite recomendado (~155-160). Google la truncará en el SERP, cortando probablemente la mención a la línea Prestige.</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p><strong>0 de 37 imágenes</strong> tienen atributo <code>alt</code>. Es la página más visual del sitio —la que debería vender el auto— y no aporta una sola señal de accesibilidad ni de SEO de imagen.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>El H2 único (“Nuestra flota de autos en Argentina para <em>rental</em>”) mezcla inglés dentro de un encabezado en español; detalle de calidad editorial a pulir.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Cero etiquetas H3 pese a listar 30+ modelos: una jerarquía por categoría (Económico, SUV, Prestige) es una oportunidad de estructura semántica perdida.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>El contenido textual único por modelo es mínimo: se repiten specs cortas (“5 pasajeros”, “Automática”, “Kilometraje ilimitado”) decenas de veces — contenido plantillado, no diferenciado.</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Sin datos estructurados de tipo <code>Product</code>/<code>Vehicle</code>: es la página con mayor potencial de rich results de fichas de auto de todo el sitio, y no lo aprovecha.</p></div>
+      </div></div>
+    </div>
+
+    <div class="accordion" id="acc-coberturas">
+      <div class="accordion-head">
+        <div class="head-left">
+          <h4>Coberturas y garantías para el auto</h4>
+          <span class="meta">Seguro de autos &middot; <code>https://www.hertz.com.ar/coberturas-y-garantias-para-el-auto</code></span>
+        </div>
+        <div class="head-right">
+          <span class="sev-pill red">7 hallazgos &middot; 3c críticos</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+      <div class="accordion-body"><div class="accordion-body-inner">
+        <table class="meta-table">
+          <tr><td>Title</td><td>&ldquo;Cobertura y garantías&rdquo; &mdash; 21 caracteres</td></tr>
+          <tr><td>Meta description</td><td>&ldquo;Nuestra cobertura y garantías para tu carro alquilado&rdquo; &mdash; 53 caracteres</td></tr>
+          <tr><td>H1</td><td>Cobertura y garantía de los vehículos</td></tr>
+          <tr><td>H2 principales</td><td>Hertz Argentina, Coberturas, Montos de franquicias y garantías</td></tr>
+          <tr><td>H3</td><td>Base, Smart, Plus, Cubiertas Cover, (C) Económico MT</td></tr>
+          <tr><td>Canonical</td><td><code>https://www.hertz.com.ar/coberturas-y-garantias-para-el-auto (correcto)</code></td></tr>
+          <tr><td>Meta robots</td><td>No presente en el head</td></tr>
+          <tr><td>Datos estructurados</td><td>No detectado — sin Product/Offer pese a listar planes de cobertura con precios</td></tr>
+          <tr><td>Volumen de contenido</td><td>~1.100 (la landing con más profundidad editorial de las 4 auditadas) palabras</td></tr>
+          <tr><td>Imágenes con / sin alt</td><td>0 de 27 con alt no vacío</td></tr>
+        </table>
+        <div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Title de solo <strong>21 caracteres</strong> (“Cobertura y garantías”): no incluye marca ni la keyword de intención “seguro auto alquiler Argentina”, desaprovechando ~50 caracteres disponibles.</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Meta description de solo <strong>53 caracteres</strong>, genérica, sin datos concretos (montos, tipos de plan) ni CTA — muy por debajo del óptimo (~120-155).</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>El H1 usa “garantía” (singular) mientras el title y la URL usan “garantías” (plural): inconsistencia menor de nomenclatura entre elementos de la misma página.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Los H3 mezclan nombres de planes de cobertura (Base, Smart, Plus) con una categoría de vehículo (“(C) Económico MT”) en el mismo nivel jerárquico: jerarquía de encabezados poco planificada.</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p><strong>0 de 27 imágenes</strong> con alt. En la página que explica coberturas y franquicias con apoyo visual, ninguna imagen es legible para un lector de pantalla ni aporta señal a Google Imágenes.</p></div>
+<div class="finding sev-green"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span><p>Es, con diferencia, la landing con más contenido editorial propio del sitio (~1.100 palabras) — la base es buena, falta pulir metadatos y accesibilidad.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Sin datos estructurados <code>Product</code>/<code>Offer</code> pese a tratarse de planes con nombre y franquicia — candidata directa a rich snippet de producto.</p></div>
+      </div></div>
+    </div>
+
+    <div class="accordion" id="acc-cargos">
+      <div class="accordion-head">
+        <div class="head-left">
+          <h4>Cargos adicionales de alquiler</h4>
+          <span class="meta">Adicionales &middot; <code>https://www.hertz.com.ar/cargos-adicionales-de-alquiler</code></span>
+        </div>
+        <div class="head-right">
+          <span class="sev-pill red">5 hallazgos &middot; 3c críticos</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+      <div class="accordion-body"><div class="accordion-body-inner">
+        <table class="meta-table">
+          <tr><td>Title</td><td>&ldquo;Cargos adicionales&rdquo; &mdash; 18 caracteres</td></tr>
+          <tr><td>Meta description</td><td>&ldquo;Información sobre cargos adicionales al adquirir un carro&rdquo; &mdash; 57 caracteres</td></tr>
+          <tr><td>H1</td><td>Cargos adicionales en el alquiler de vehículos</td></tr>
+          <tr><td>H2 principales</td><td>Hertz Argentina, Demoras en la devolución, Combustible, Extensión de alquileres, Cargos por devoluciones en otro país, Servicios opcionales con cargo extra</td></tr>
+          <tr><td>H3</td><td>&mdash;</td></tr>
+          <tr><td>Canonical</td><td><code>https://www.hertz.com.ar/cargos-adicionales-de-alquiler (correcto)</code></td></tr>
+          <tr><td>Meta robots</td><td>No presente en el head</td></tr>
+          <tr><td>Datos estructurados</td><td>No detectado</td></tr>
+          <tr><td>Volumen de contenido</td><td>~520 (cobertura temática razonable) palabras</td></tr>
+          <tr><td>Imágenes con / sin alt</td><td>0 de 6 con alt no vacío</td></tr>
+        </table>
+        <div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Title de solo <strong>18 caracteres</strong> (“Cargos adicionales”): el más corto de todo el sitio, sin marca ni keyword comercial “alquiler de autos”.</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>La meta description usa <strong>“adquirir un carro”</strong> (comprar) en una página que trata cargos de <strong>alquiler</strong>: posible error de copy que manda la señal de intención equivocada a Google.</p></div>
+<div class="finding sev-green"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span><p>El H1 (“Cargos adicionales en el alquiler de vehículos”) está mejor optimizado que el title de la misma página — paradoja a corregir alineando ambos.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Cero H3 pese a listar varios servicios opcionales con cargo extra: faltan subtítulos por servicio para mejorar escaneabilidad y estructura semántica.</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p><strong>0 de 6 imágenes</strong> con alt.</p></div>
+      </div></div>
+    </div>
+
+    <div class="accordion" id="acc-empresas">
+      <div class="accordion-head">
+        <div class="head-left">
+          <h4>Convenio Empresas y Agencias</h4>
+          <span class="meta">Empresas &middot; <code>https://www.hertz.com.ar/convenio-empresas</code></span>
+        </div>
+        <div class="head-right">
+          <span class="sev-pill red">5 hallazgos &middot; 1c críticos</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+      <div class="accordion-body"><div class="accordion-body-inner">
+        <table class="meta-table">
+          <tr><td>Title</td><td>&ldquo;Convenio Empresas y Agencias&rdquo; &mdash; 28 caracteres</td></tr>
+          <tr><td>Meta description</td><td>&ldquo;Acuerdo comercial para empresas que quieran alquilar un coche&rdquo; &mdash; 61 caracteres</td></tr>
+          <tr><td>H1</td><td>Convenio Empresas y Agencias</td></tr>
+          <tr><td>H2 principales</td><td>Disfrutemos juntos el camino</td></tr>
+          <tr><td>H3</td><td>Formulario de Empresas</td></tr>
+          <tr><td>Canonical</td><td><code>https://www.hertz.com.ar/convenio-empresas (correcto)</code></td></tr>
+          <tr><td>Meta robots</td><td>No presente en el head</td></tr>
+          <tr><td>Datos estructurados</td><td>No detectado</td></tr>
+          <tr><td>Volumen de contenido</td><td>~85 (la landing con menos contenido de todo el sitio) palabras</td></tr>
+          <tr><td>Imágenes con / sin alt</td><td>6 de 11 con alt no vacío</td></tr>
+        </table>
+        <div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Solo <strong>~85 palabras</strong> de contenido propio: es prácticamente un formulario de contacto sin argumentario comercial (nada sobre beneficios, condiciones, facturación o flota corporativa).</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>La meta description usa <strong>“coche”</strong> (variante de España) mientras el resto del sitio usa “auto”/“carro” (Argentina): inconsistencia de variante de español dentro del propio copy SEO.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>El H2 único (“Disfrutemos juntos el camino”) es una frase de marca sin valor semántico ni keyword para una landing B2B: se pierde la oportunidad de reforzar “alquiler de autos para empresas”.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Title corto (28c) sin keyword de intención (“alquiler de autos para empresas”); el H1 la repite igual, sin aportar variante long-tail.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>5 de 11 imágenes sin alt.</p></div>
+      </div></div>
+    </div>
+    </div>
+  </section>
+
+  <section class="report-section" id="tecnico">
+    <div class="section-inner">
+      <div class="section-kicker">03 &middot; SEO Técnico</div>
+      <h2 class="section-title">Rastreo, indexación y arquitectura</h2>
+      <p class="section-lede">robots.txt, sitemap, canonicals, datos estructurados, canibalización y enlaces internos — hallazgos transversales a todo el sitio.</p>
+      <div class="grid-2" style="margin-bottom:28px">
+        <div class="card">
+          <h3 style="font-size:16px;margin-bottom:10px">robots.txt</h3>
+          <p style="font-size:13.5px"><code>User-agent: *</code><br><code>Disallow: /admin/</code><br><code>Sitemap: https://www.hertz.com.ar/sitemap-index.xml</code></p>
+          <p class="small-note">Único bloqueo: la carpeta admin. Sin restricciones problemáticas de rastreo.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:16px;margin-bottom:10px">Sitemaps</h3>
+          <p style="font-size:13.5px">Index &rarr; <code>sitemap.xml</code> (~61 URLs, sin lastmod), <code>sitemap-sucursales.xml</code>, <code>sitemap-blog.xml</code> (~14 artículos, hreflang es/en incluido).</p>
+          <p class="small-note">Accesible y bien formado; falta señal de frescura (lastmod).</p>
+        </div>
+      </div>
+      
+    <div class="sev-filter">
+      <button class="sev-btn active" data-filter="all">Todos</button>
+      <button class="sev-btn" data-filter="red">Críticos</button>
+      <button class="sev-btn" data-filter="yellow">A mejorar</button>
+      <button class="sev-btn" data-filter="green">Correctos</button>
+    </div>
+      <div class="finding sev-green"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span><p>El <code>robots.txt</code> es limpio: solo bloquea <code>/admin/</code> para todos los user-agents y declara correctamente <code>Sitemap: https://www.hertz.com.ar/sitemap-index.xml</code>. No hay restricciones problemáticas.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>El sitemap accesible en <code>/sitemap.xml</code> (~61 URLs) no coincide en nombre con el declarado en robots.txt (<code>sitemap-index.xml</code>). Ambas rutas responden, pero conviene que el cliente confirme en Search Console si son alias o archivos distintos.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Ninguna entrada del sitemap incluye <code>&lt;lastmod&gt;</code>: cero señal de frescura de contenido para los rastreadores.</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>El H1 de <strong>Quiénes somos</strong> y del hub de <strong>Sucursales</strong> (<code>/alquiler-de-autos-en-argentina</code>) se capturó literalmente como <strong>“Cargando...”</strong> — el placeholder de un componente que depende de JavaScript y no terminó de renderizar en el momento de la captura. Riesgo real de que Googlebot indexe un encabezado vacío en vez del contenido real; se recomienda verificación directa en Search Console (no verificable al 100% solo con las herramientas de este entorno).</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Cero datos estructurados (JSON-LD) verificables en las 5 páginas principales auditadas (home + 4 landings), confirmado con búsqueda literal del string en dos pasadas por página.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Ausencia casi total de <code>alt</code> en imágenes de las páginas de producto: Flota 0/37, Coberturas 0/27, Cargos adicionales 0/6. Solo Home (6/9) y Convenio Empresas (6/11) tienen cobertura parcial.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Ninguna de las 4 landings de producto enlaza contextualmente a las otras desde el cuerpo del texto — el silo temático entre “ramos” está roto. Solo <strong>Quiénes somos</strong> y <strong>Preguntas frecuentes</strong> enlazan hacia las landings.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Riesgo de canibalización moderado entre <strong>Home</strong> y <strong>Flota</strong>: ambas compiten fuerte por “alquiler de autos” + “Argentina” en title/H1. No es grave porque el intent difiere (marca vs. catálogo), pero el solapamiento es alto.</p></div>
+<div class="finding sev-green"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span><p>No se detectaron enlaces internos rotos (404/500) en la muestra verificada (Quiénes somos, FAQ y sus enlaces salientes), aunque esta verificación es indirecta vía WebFetch, no un chequeo HTTP directo (curl bloqueado en este entorno).</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>La página de <strong>Preguntas frecuentes</strong> tiene ~19-20 preguntas bien cubiertas pero sin marcado <code>FAQPage</code>: candidata obvia y de bajo esfuerzo para rich snippet de FAQ que hoy no se aprovecha.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>El title y meta description de <strong>Quiénes somos</strong> prometen “nuestra historia, valores y equipo”, pero el contenido real entregado son ~30-40 palabras genéricas: la página no cumple lo que promete su propia meta description (señal débil de E-E-A-T).</p></div>
+    </div>
+  </section>
+
+  <section class="report-section" id="rendimiento">
+    <div class="section-inner">
+      <div class="section-kicker">04 &middot; Rendimiento y experiencia</div>
+      <h2 class="section-title">Diagnóstico arquitectónico de front-end</h2>
+      <p class="section-lede">Análisis cualitativo a partir de la inspección del HTML de la home y de la landing de Flota &mdash; sin Core Web Vitals ni PageSpeed Insights, tal como exige el alcance de esta auditoría. Ver limitaciones de acceso de red en Metodología.</p>
+      <div class="chart-card">
+        <h3>Diagnóstico de front-end &mdash; home auditada</h3>
+        <p class="chart-note">Escala cualitativa 0-3 (0 = no verificable, 1 = alerta / sin datos suficientes, 2 = aceptable, 3 = positivo confirmado). No son milisegundos ni puntuaciones de Lighthouse.</p>
+        <div class="chart-host" id="chart-frontend"></div>
+      </div>
+      
+    <div class="sev-filter">
+      <button class="sev-btn active" data-filter="all">Todos</button>
+      <button class="sev-btn" data-filter="red">Críticos</button>
+      <button class="sev-btn" data-filter="yellow">A mejorar</button>
+      <button class="sev-btn" data-filter="green">Correctos</button>
+    </div>
+      <div class="finding sev-green"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span><p><strong>Framework moderno confirmado:</strong> Next.js, con <code>_next/image</code> optimizando automáticamente el peso y el tamaño de las imágenes servidas (parámetros <code>w=</code> y <code>q=75</code> detectados en las URLs). Es una base técnica sana, poco común en el sector de alquiler de autos en Argentina.</p></div>
+      <div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p><strong>Sin visibilidad de terceros cargados en el arranque:</strong> no se detectaron contenedores de Google Tag Manager, tags de Analytics, reCAPTCHA, banner de consentimiento de cookies ni chat en vivo integrado (solo un ícono de acceso directo a WhatsApp). Esta ausencia <strong>no debe leerse como confirmación de que no existen</strong>: la herramienta de inspección disponible en este entorno no tiene acceso al código fuente crudo ni a las etiquetas <code>&lt;script&gt;</code> (ver Metodología). Se recomienda verificación directa con DevTools antes de tomar decisiones.</p></div>
+      <div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p><strong>No se pudo determinar</strong> el peso exacto del HTML, el formato real de las imágenes (WebP/AVIF vs. JPEG) más allá de los logos en SVG/PNG detectados, ni los recursos render-blocking del <code>&lt;head&gt;</code>. Ninguna cifra de estos puntos aparece en este informe: donde no hay dato verificado, no hay cifra.</p></div>
+    </div>
+  </section>
+
+  <section class="report-section" id="contenido">
+    <div class="section-inner">
+      <div class="section-kicker">05 &middot; Contenido</div>
+      <h2 class="section-title">Blog, profundidad editorial y silo temático</h2>
+      <p class="section-lede">Hertz Argentina sí tiene blog activo &mdash; el problema no es la falta de contenido, es que ese contenido no está conectado con las páginas que convierten.</p>
+      <div class="grid-3" style="margin-bottom:28px">
+        <div class="card"><h3 style="font-size:15px">Artículos indexados</h3><p style="font-size:28px;font-family:'Fraunces';color:var(--text-strong);margin:6px 0">14</p><p class="small-note">Vía sitemap-blog.xml</p></div>
+        <div class="card"><h3 style="font-size:15px">Frecuencia aparente</h3><p style="font-size:15px;margin:10px 0 0">aprox. cada 2 semanas (últimos posts entre marzo y junio de 2026)</p></div>
+        <div class="card"><h3 style="font-size:15px">Categorías</h3><p style="font-size:15px;margin:10px 0 0">Recomendación de Viajes, Novedades, Destinos</p></div>
+      </div>
+      
+    <div class="sev-filter">
+      <button class="sev-btn active" data-filter="all">Todos</button>
+      <button class="sev-btn" data-filter="red">Críticos</button>
+      <button class="sev-btn" data-filter="yellow">A mejorar</button>
+      <button class="sev-btn" data-filter="green">Correctos</button>
+    </div>
+      <div class="finding sev-green"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span><p>El blog está activo: ~14 artículos indexados en <code>sitemap-blog.xml</code>, publicación aproximadamente cada 2 semanas, con 3 categorías (Recomendación de Viajes, Novedades, Destinos).</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Title y meta description de la página <code>/blog</code> son literalmente <strong>“Blog”</strong> y <strong>“Blog”</strong>: sin keyword, sin propuesta de valor, el hallazgo on-page más flagrante de todo el sitio.</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Silo temático roto: artículos con intención de conversión directa como “¿Es mejor alquilar auto vs. mantenerlo?” o “Mejor auto para rutas de montaña” no enlazan hacia las landings de Flota o Coberturas. El blog capta tráfico informacional y lo deja morir ahí, en vez de empujarlo al funnel.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>El artículo “Requisitos para alquilar auto” ya posiciona bien (Hertz aparece #2-#3 en esa búsqueda, según la investigación de keywords): es la prueba de que el blog sí puede funcionar cuando cubre una intención específica — el patrón no está replicado en el resto del blog.</p></div>
+    </div>
+  </section>
+
+  <section class="report-section" id="comparativa">
+    <div class="section-inner">
+      <div class="section-kicker">06 &middot; Comparativa competitiva</div>
+      <h2 class="section-title">Hertz vs. Avis, Europcar y Sixt Argentina</h2>
+      <p class="section-lede">Se seleccionaron tres competidores directos de Hertz Argentina por criterio profesional: marcas internacionales de alquiler de autos con presencia real y sitio propio en el mercado argentino, solapamiento total de catálogo (flota + coberturas + cargos + convenios empresariales) y posicionamiento de marca comparable (jugador global, no un actor local de nicho): <strong>Avis Argentina</strong> (avis.com.ar), <strong>Europcar Argentina</strong> (europcar.com.ar) y <strong>Sixt Argentina</strong> (sixt.com/car-rental/argentina). Se excluyó Localiza por no tener presencia consolidada con sitio propio en Argentina en el momento de la auditoría.</p>
+
+      <div class="chart-card">
+        <h3>Profundidad de contenido &mdash; landing de coche</h3>
+        <p class="chart-note">Palabras estimadas de contenido propio en la landing de alquiler/tarifas de cada marca.</p>
+        <div class="chart-host" id="chart-content"></div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Índice de auditoría 0-100 &mdash; 6 ejes</h3>
+        <p class="chart-note">Radar comparativo: on-page, técnico, contenido, rendimiento, móvil y autoridad de marca. Rendimiento/móvil de los competidores son estimaciones más ligeras (el alcance de auditoría de front-end profundo se limitó al sitio auditado, ver Metodología); autoridad es un índice cualitativo del consultor, no un dato de Ahrefs/Moz.</p>
+        <div class="chart-host radar-host" id="chart-radar"></div>
+      </div>
+
+      <h3 style="font-size:20px;margin:36px 0 16px">Tabla comparativa &mdash; 13 métricas verificadas</h3>
+      
+      <div class="table-wrap">
+        <table class="compare" id="compare-table">
+          <thead><tr><th>Métrica</th><th class="hertz-col" data-sort-key="hertz">Hertz (auditado)<span class="arrow"></span></th><th class="" data-sort-key="avis">Avis<span class="arrow"></span></th><th class="" data-sort-key="europcar">Europcar<span class="arrow"></span></th><th class="" data-sort-key="sixt">Sixt<span class="arrow"></span></th></tr></thead>
+          <tbody><tr><th scope="row">Longitud title home (caracteres)</th><td class="site-cell hertz-col" data-key="hertz" data-value="33" data-score="0">33c</td><td class="site-cell" data-key="avis" data-value="61" data-score="1">61c</td><td class="site-cell" data-key="europcar" data-value="41" data-score="0">41c</td><td class="site-cell" data-key="sixt" data-value="54" data-score="2">54c</td></tr><tr><th scope="row">Longitud meta description home (caracteres)</th><td class="site-cell hertz-col" data-key="hertz" data-value="161" data-score="1">161c</td><td class="site-cell" data-key="avis" data-value="161" data-score="1">161c</td><td class="site-cell" data-key="europcar" data-value="115" data-score="1">115c</td><td class="site-cell" data-key="sixt" data-value="129" data-score="2">129c</td></tr><tr><th scope="row">H1 único en home</th><td class="site-cell hertz-col" data-key="hertz" data-value="0" data-score="0">Duplicado (2)</td><td class="site-cell" data-key="avis" data-value="0" data-score="0">Ausente</td><td class="site-cell" data-key="europcar" data-value="2" data-score="2">Sí</td><td class="site-cell" data-key="sixt" data-value="2" data-score="2">Sí</td></tr><tr><th scope="row">Nº de H2 en home</th><td class="site-cell hertz-col" data-key="hertz" data-value="3" data-score="0">3</td><td class="site-cell" data-key="avis" data-value="0" data-score="0">0</td><td class="site-cell" data-key="europcar" data-value="6" data-score="1">6</td><td class="site-cell" data-key="sixt" data-value="10" data-score="2">10</td></tr><tr><th scope="row">Title/meta duplicados entre home y landing</th><td class="site-cell hertz-col" data-key="hertz" data-value="2" data-score="2">No</td><td class="site-cell" data-key="avis" data-value="0" data-score="0">Sí (idénticos)</td><td class="site-cell" data-key="europcar" data-value="2" data-score="2">No</td><td class="site-cell" data-key="sixt" data-value="2" data-score="2">No</td></tr><tr><th scope="row">Volumen de contenido, landing de coche (palabras aprox.)</th><td class="site-cell hertz-col" data-key="hertz" data-value="335" data-score="0">335</td><td class="site-cell" data-key="avis" data-value="75" data-score="0">75</td><td class="site-cell" data-key="europcar" data-value="290" data-score="0">290</td><td class="site-cell" data-key="sixt" data-value="2100" data-score="2">2100</td></tr><tr><th scope="row">Cobertura de alt en imágenes, landing de coche</th><td class="site-cell hertz-col" data-key="hertz" data-value="0" data-score="0">0%</td><td class="site-cell" data-key="avis" data-value="85" data-score="2">85%</td><td class="site-cell" data-key="europcar" data-value="75" data-score="2">75%</td><td class="site-cell" data-key="sixt" data-value="0" data-score="0">0%</td></tr><tr><th scope="row">Canonical autorreferencial en home</th><td class="site-cell hertz-col" data-key="hertz" data-value="1" data-score="1">Parcial (mismatch de barra final)</td><td class="site-cell" data-key="avis" data-value="0" data-score="0">No</td><td class="site-cell" data-key="europcar" data-value="2" data-score="2">Sí</td><td class="site-cell" data-key="sixt" data-value="2" data-score="2">Sí</td></tr><tr><th scope="row">Meta robots sin anomalías</th><td class="site-cell hertz-col" data-key="hertz" data-value="0" data-score="0">No (incluye “nocache”)</td><td class="site-cell" data-key="avis" data-value="2" data-score="2">Sí</td><td class="site-cell" data-key="europcar" data-value="2" data-score="2">Sí</td><td class="site-cell" data-key="sixt" data-value="2" data-score="2">Sí</td></tr><tr><th scope="row">Datos estructurados (JSON-LD) verificables</th><td class="site-cell hertz-col" data-key="hertz" data-value="0" data-score="0">No detectado</td><td class="site-cell" data-key="avis" data-value="0" data-score="0">No detectado</td><td class="site-cell" data-key="europcar" data-value="0" data-score="0">No detectado</td><td class="site-cell" data-key="sixt" data-value="0" data-score="0">No detectado</td></tr><tr><th scope="row">FAQs visibles en landing de coche</th><td class="site-cell hertz-col" data-key="hertz" data-value="0" data-score="0">No</td><td class="site-cell" data-key="avis" data-value="0" data-score="0">No</td><td class="site-cell" data-key="europcar" data-value="2" data-score="2">Sí (4)</td><td class="site-cell" data-key="sixt" data-value="2" data-score="2">Sí (7+)</td></tr><tr><th scope="row">Tabla comparativa de coberturas visible</th><td class="site-cell hertz-col" data-key="hertz" data-value="0" data-score="0">No</td><td class="site-cell" data-key="avis" data-value="0" data-score="0">No</td><td class="site-cell" data-key="europcar" data-value="0" data-score="0">No</td><td class="site-cell" data-key="sixt" data-value="0" data-score="0">No</td></tr><tr><th scope="row">Enlazado interno contextual, landing de coche</th><td class="site-cell hertz-col" data-key="hertz" data-value="0" data-score="0">No</td><td class="site-cell" data-key="avis" data-value="0" data-score="0">No</td><td class="site-cell" data-key="europcar" data-value="0" data-score="0">No</td><td class="site-cell" data-key="sixt" data-value="1" data-score="1">Parcial</td></tr></tbody>
+          <tfoot><tr><th scope="row">Índice comparativo total</th><td class="hertz-col">15/100</td><td class="">23/100</td><td class="">54/100</td><td class="">73/100</td></tr></tfoot>
+        </table>
+      </div>
+      <p class="small-note" style="margin-top:10px">Índice comparativo: suma normalizada (0-100) de las 13 métricas de la tabla, no un dato de autoridad de dominio real (no hay acceso a herramientas de backlinks en este entorno). Hacé clic en cualquier encabezado para ordenar.</p>
+    
+
+      <h3 style="font-size:20px;margin:36px 0 16px">Detalle por página auditada</h3>
+      <div class="grid-2">
+      <div class="card">
+        <span class="tag-pill">Avis Argentina &middot; Home</span>
+        <table class="meta-table">
+          <tr><td>URL</td><td><code>https://avis.com.ar/</code></td></tr>
+          <tr><td>Title</td><td>&ldquo;Avis | Alquiler de Autos en Argentina | Tarifas y Promociones&rdquo; (61c)</td></tr>
+          <tr><td>Meta description</td><td>161 caracteres</td></tr>
+          <tr><td>H1</td><td>Ausente</td></tr>
+          <tr><td>Nº de H2</td><td>0</td></tr>
+          <tr><td>Canonical</td><td>Apunta a /ofertas/ofertas-argentina (no autorreferencial)</td></tr>
+          <tr><td>Volumen de contenido</td><td>50-150 (aprox., thin content)</td></tr>
+          <tr><td>FAQs</td><td>No</td></tr>
+          <tr><td>Tabla de coberturas</td><td>No</td></tr>
+          <tr><td>Cobertura de alt</td><td>No verificable con precisión (inconsistente entre pasadas)</td></tr>
+          <tr><td>Schema</td><td>No detectado</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <span class="tag-pill">Avis Argentina &middot; Landing de coche</span>
+        <table class="meta-table">
+          <tr><td>URL</td><td><code>https://avis.com.ar/ofertas/ofertas-argentina</code></td></tr>
+          <tr><td>Title</td><td>&ldquo;Avis | Alquiler de Autos en Argentina | Tarifas y Promociones (idéntico a home)&rdquo; (61c)</td></tr>
+          <tr><td>Meta description</td><td>161 caracteres</td></tr>
+          <tr><td>H1</td><td>No detectado</td></tr>
+          <tr><td>Nº de H2</td><td>0</td></tr>
+          <tr><td>Canonical</td><td>Autorreferencial</td></tr>
+          <tr><td>Volumen de contenido</td><td>50-100 (aprox., thin content)</td></tr>
+          <tr><td>FAQs</td><td>No</td></tr>
+          <tr><td>Tabla de coberturas</td><td>No</td></tr>
+          <tr><td>Cobertura de alt</td><td>~11/13 (aprox.)</td></tr>
+          <tr><td>Schema</td><td>No detectado</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <span class="tag-pill">Europcar Argentina &middot; Home</span>
+        <table class="meta-table">
+          <tr><td>URL</td><td><code>https://www.europcar.com.ar/</code></td></tr>
+          <tr><td>Title</td><td>&ldquo;Alquiler de autos en Argentina | Europcar&rdquo; (41c)</td></tr>
+          <tr><td>Meta description</td><td>115 caracteres</td></tr>
+          <tr><td>H1</td><td>Alquiler de autos en Argentina</td></tr>
+          <tr><td>Nº de H2</td><td>6</td></tr>
+          <tr><td>Canonical</td><td>Autorreferencial</td></tr>
+          <tr><td>Volumen de contenido</td><td>350-400 (aprox.)</td></tr>
+          <tr><td>FAQs</td><td>Sí (~3-4)</td></tr>
+          <tr><td>Tabla de coberturas</td><td>No</td></tr>
+          <tr><td>Cobertura de alt</td><td>Mayoría sin alt (aprox., no exacto)</td></tr>
+          <tr><td>Schema</td><td>No detectado</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <span class="tag-pill">Europcar Argentina &middot; Landing de coche</span>
+        <table class="meta-table">
+          <tr><td>URL</td><td><code>https://www.europcar.com.ar/es/alquiler-de-autos/buenos-aires/</code></td></tr>
+          <tr><td>Title</td><td>&ldquo;Alquiler de Autos en Buenos Aires | Europcar&rdquo; (44c)</td></tr>
+          <tr><td>Meta description</td><td>118 caracteres</td></tr>
+          <tr><td>H1</td><td>Alquiler de autos en Buenos Aires</td></tr>
+          <tr><td>Nº de H2</td><td>3</td></tr>
+          <tr><td>Canonical</td><td>Autorreferencial</td></tr>
+          <tr><td>Volumen de contenido</td><td>280-300 (aprox.)</td></tr>
+          <tr><td>FAQs</td><td>Sí (4)</td></tr>
+          <tr><td>Tabla de coberturas</td><td>No</td></tr>
+          <tr><td>Cobertura de alt</td><td>3/4</td></tr>
+          <tr><td>Schema</td><td>No detectado</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <span class="tag-pill">Sixt Argentina &middot; Home / hub país</span>
+        <table class="meta-table">
+          <tr><td>URL</td><td><code>https://www.sixt.com/car-rental/argentina/</code></td></tr>
+          <tr><td>Title</td><td>&ldquo;Argentina Car Rental: Cheap deals with Sixt rent a car&rdquo; (54c)</td></tr>
+          <tr><td>Meta description</td><td>129 caracteres</td></tr>
+          <tr><td>H1</td><td>Car rental in Argentina</td></tr>
+          <tr><td>Nº de H2</td><td>10</td></tr>
+          <tr><td>Canonical</td><td>Autorreferencial</td></tr>
+          <tr><td>Volumen de contenido</td><td>~1.100 (aprox.)</td></tr>
+          <tr><td>FAQs</td><td>Sí (5+ temas)</td></tr>
+          <tr><td>Tabla de coberturas</td><td>No</td></tr>
+          <tr><td>Cobertura de alt</td><td>1/10</td></tr>
+          <tr><td>Schema</td><td>No detectado</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <span class="tag-pill">Sixt Argentina &middot; Landing de coche</span>
+        <table class="meta-table">
+          <tr><td>URL</td><td><code>https://www.sixt.com/car-rental/argentina/buenos-aires/</code></td></tr>
+          <tr><td>Title</td><td>&ldquo;Car Rental in Buenos Aires | SIXT rent a car&rdquo; (44c)</td></tr>
+          <tr><td>Meta description</td><td>142 caracteres</td></tr>
+          <tr><td>H1</td><td>Car rental in Buenos Aires</td></tr>
+          <tr><td>Nº de H2</td><td>13</td></tr>
+          <tr><td>Canonical</td><td>Autorreferencial</td></tr>
+          <tr><td>Volumen de contenido</td><td>~2.100 (aprox., la mayor de las 6 páginas de competidores auditadas)</td></tr>
+          <tr><td>FAQs</td><td>Sí (7+ temas)</td></tr>
+          <tr><td>Tabla de coberturas</td><td>No</td></tr>
+          <tr><td>Cobertura de alt</td><td>0/11</td></tr>
+          <tr><td>Schema</td><td>No detectado</td></tr>
+        </table>
+      </div></div>
+
+      <div style="margin-top:28px">
+        
+    <div class="sev-filter">
+      <button class="sev-btn active" data-filter="all">Todos</button>
+      <button class="sev-btn" data-filter="red">Críticos</button>
+      <button class="sev-btn" data-filter="yellow">A mejorar</button>
+      <button class="sev-btn" data-filter="green">Correctos</button>
+    </div>
+        <div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p><strong>Avis</strong> no tiene H1 ni H2 detectables ni en su home ni en su landing de ofertas — el hallazgo técnico más grave entre los 4 sitios auditados (incluido Hertz).</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>La home de <strong>Avis</strong> canonicaliza hacia <code>/ofertas/ofertas-argentina</code> en vez de autorreferenciarse, y ambas páginas comparten title y meta description idénticos: señal de contenido duplicado entre home y landing.</p></div>
+<div class="finding sev-green"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span><p><strong>Sixt</strong> domina en volumen editorial: ~2.100 palabras en su landing de Buenos Aires, más de 6 veces el contenido de la landing equivalente de Hertz (Flota, ~335 palabras).</p></div>
+<div class="finding sev-red"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p>Pese a su profundidad de contenido, <strong>Sixt</strong> tiene la peor cobertura de alt de las 6 páginas de competidores: 0 de 11 imágenes en su landing de Buenos Aires.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p><strong>Ninguno</strong> de los 3 competidores (ni Hertz) muestra una tabla comparativa visual de coberturas/seguros: es un vacío de todo el sector en Argentina, no solo de Hertz — quien la implemente primero se diferencia.</p></div>
+<div class="finding sev-yellow"><span class="sev-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v8M12 17h.01"/></svg></span><p><strong>Europcar</strong> y <strong>Sixt</strong> tienen FAQs visibles en sus landings de coche; Hertz no las tiene en Flota (sí las concentra, sin schema, en una página FAQ separada).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="report-section" id="keywords">
+    <div class="section-inner">
+      <div class="section-kicker">07 &middot; Oportunidades de keywords</div>
+      <h2 class="section-title">10 long-tail validadas con SERP real</h2>
+      <p class="section-lede">Cada keyword fue buscada en Google durante esta auditoría, observando quién rankea hoy y si Hertz Argentina aparece o no. Dificultad y volumen son estimaciones cualitativas justificadas por la composición real de la SERP &mdash; ningún número de volumen de búsqueda ni de keyword difficulty score fue inventado.</p>
+      <div class="chart-card">
+        <h3>Mapa de oportunidades por línea de negocio</h3>
+        <p class="chart-note">Conteo real de las 10 keywords ganadoras, agrupadas por línea de negocio y dificultad estimada.</p>
+        <div class="chart-host" id="chart-keywords"></div>
+      </div>
+      <div class="kw-grid">
+      <div class="kw-card">
+        <span class="kw-ramo">Alquiler de vehículos</span>
+        <h4>&ldquo;alquiler de auto aeropuerto ezeiza precio&rdquo;</h4>
+        <div class="kw-tags">
+          <span class="kw-tag">Transaccional</span>
+          <span class="kw-tag dif-alta">Dificultad: Alta</span>
+          <span class="kw-tag">Volumen: Alto</span>
+        </div>
+        <p><span class="kw-label">Por qué:</span> Hertz aparece #4 pero con la página de sucursal (informativa, sin foco en precio/promo) — compite en desventaja frente a comparadores que sí muestran tarifas.</p>
+        <p><span class="kw-label">SERP observada:</span> El top 10 lo dominan 3 comparadores con autoridad muy superior (Rentcars x2, Kayak x2, Uber) y marcas globales con landing propia por aeropuerto (Avis, Sixt).</p>
+        <p><span class="kw-label">Contenido recomendado:</span> Landing de producto “Alquiler de auto en Ezeiza” con rango de tarifas por categoría y CTA de cotización directa.</p>
+      </div>
+
+      <div class="kw-card">
+        <span class="kw-ramo">Alquiler de vehículos</span>
+        <h4>&ldquo;cuanto sale alquilar un auto por dia en argentina&rdquo;</h4>
+        <div class="kw-tags">
+          <span class="kw-tag">Informacional / comercial</span>
+          <span class="kw-tag dif-media-alta">Dificultad: Media-alta</span>
+          <span class="kw-tag">Volumen: Alto</span>
+        </div>
+        <p><span class="kw-label">Por qué:</span> Hertz aparece recién en la posición 8 con la home genérica, sin contenido de precios, mientras medios generalistas capturan la intención.</p>
+        <p><span class="kw-label">SERP observada:</span> Kayak, Infobae, MercadoLibre y blogs locales de precios ocupan casi todo el top 10.</p>
+        <p><span class="kw-label">Contenido recomendado:</span> Artículo guía “¿Cuánto cuesta alquilar un auto en Argentina en 2026?” con rangos por categoría y ciudad, evergreen y actualizable.</p>
+      </div>
+
+      <div class="kw-card">
+        <span class="kw-ramo">Alquiler de vehículos</span>
+        <h4>&ldquo;mejor epoca para alquilar auto en argentina&rdquo;</h4>
+        <div class="kw-tags">
+          <span class="kw-tag">Informacional (quick win)</span>
+          <span class="kw-tag dif-media">Dificultad: Media</span>
+          <span class="kw-tag">Volumen: Medio</span>
+        </div>
+        <p><span class="kw-label">Por qué:</span> Hertz tiene blog activo (aparece #8) pero con un artículo que responde otra intención (“comprar vs. alquilar”), no la pregunta estacional real.</p>
+        <p><span class="kw-label">SERP observada:</span> Un resultado exacto fuerte (Kayak Blog Argentina #1); el resto son medios generalistas (Infobae, La Nación, Momondo) sin gran especialización.</p>
+        <p><span class="kw-label">Contenido recomendado:</span> Artículo de blog cruzando temporada alta/baja, feriados y destinos (Bariloche, Mendoza, Costa Atlántica).</p>
+      </div>
+
+      <div class="kw-card">
+        <span class="kw-ramo">Coberturas y seguros</span>
+        <h4>&ldquo;franquicia alquiler de auto que es&rdquo;</h4>
+        <div class="kw-tags">
+          <span class="kw-tag">Informacional (quick win)</span>
+          <span class="kw-tag dif-media">Dificultad: Media</span>
+          <span class="kw-tag">Volumen: Medio</span>
+        </div>
+        <p><span class="kw-label">Por qué:</span> Gap total de contenido en español rioplatense: un usuario argentino recibe resultados de España, y Hertz Argentina no aparece pese a tener página de coberturas.</p>
+        <p><span class="kw-label">SERP observada:</span> Sin competencia argentina, pero hay que desplazar contenido español bien posicionado (rgautomocion.es, Allianz, Goldcar, Pepecar, Quora).</p>
+        <p><span class="kw-label">Contenido recomendado:</span> FAQ/artículo “¿Qué es la franquicia en el alquiler de un auto?” con el caso concreto de los planes Base/Smart/Plus de Hertz, enlazado desde Coberturas.</p>
+      </div>
+
+      <div class="kw-card">
+        <span class="kw-ramo">Coberturas y seguros</span>
+        <h4>&ldquo;diferencia entre CDW y LDW alquiler de auto&rdquo;</h4>
+        <div class="kw-tags">
+          <span class="kw-tag">Informacional (mid-funnel)</span>
+          <span class="kw-tag dif-media-alta">Dificultad: Media-alta</span>
+          <span class="kw-tag">Volumen: Bajo-medio</span>
+        </div>
+        <p><span class="kw-label">Por qué:</span> Cero presencia de marca argentina o de Hertz; terreno fértil para posicionar el propio vocabulario de coberturas (CDW, LDW, SLI) de Hertz.</p>
+        <p><span class="kw-label">SERP observada:</span> Dominan sitios especializados en seguros de alquiler para EEUU (seguroestadosunidos.com, Auto Europe, Hola Car Rentals x3).</p>
+        <p><span class="kw-label">Contenido recomendado:</span> Artículo glosario/comparativo con tabla, enlazado a la página de Coberturas.</p>
+      </div>
+
+      <div class="kw-card">
+        <span class="kw-ramo">Coberturas y seguros</span>
+        <h4>&ldquo;seguro de la tarjeta de credito cubre auto alquilado argentina&rdquo;</h4>
+        <div class="kw-tags">
+          <span class="kw-tag">Informacional / comercial de alto valor</span>
+          <span class="kw-tag dif-alta">Dificultad: Alta</span>
+          <span class="kw-tag">Volumen: Medio-alto</span>
+        </div>
+        <p><span class="kw-label">Por qué:</span> Hertz no aparece en ningún resultado. Es la objeción exacta que evita que un cliente contrate la cobertura de Hertz — capturarla permite argumentar a favor de la cobertura propia.</p>
+        <p><span class="kw-label">SERP observada:</span> Dominan bancos y marcas de tarjeta con gran autoridad (Amex Platinum, Santander, Mastercard, Visa) más La Nación.</p>
+        <p><span class="kw-label">Contenido recomendado:</span> Artículo comparativo/FAQ explicando límites reales del seguro de tarjeta (franquicias, exclusiones, trámites) frente a la cobertura directa de Hertz.</p>
+      </div>
+
+      <div class="kw-card">
+        <span class="kw-ramo">Cargos adicionales</span>
+        <h4>&ldquo;alquilar auto y devolverlo en otra ciudad cargo extra argentina&rdquo;</h4>
+        <div class="kw-tags">
+          <span class="kw-tag">Transaccional / informacional</span>
+          <span class="kw-tag dif-media">Dificultad: Media</span>
+          <span class="kw-tag">Volumen: Medio</span>
+        </div>
+        <p><span class="kw-label">Por qué:</span> Hertz compite con una página “catálogo” que mezcla todos los cargos, mientras la competencia gana con páginas dedicadas a esta intención puntual.</p>
+        <p><span class="kw-label">SERP observada:</span> Hertz ya rankea #2 con su página genérica de cargos, pero National (FAQ dedicada) es #1 y Budget tiene landing 100% específica (“entrega-en-otra-oficina”) en #3.</p>
+        <p><span class="kw-label">Contenido recomendado:</span> Sub-página/FAQ específica “Devolución en otra ciudad (tarifa one-way): costo y condiciones” desglosada de la página general de cargos.</p>
+      </div>
+
+      <div class="kw-card">
+        <span class="kw-ramo">Cargos adicionales</span>
+        <h4>&ldquo;alquiler de auto cruzar a chile requisitos cargo adicional&rdquo;</h4>
+        <div class="kw-tags">
+          <span class="kw-tag">Informacional + transaccional</span>
+          <span class="kw-tag dif-media-alta">Dificultad: Media-alta</span>
+          <span class="kw-tag">Volumen: Medio (estacional)</span>
+        </div>
+        <p><span class="kw-label">Por qué:</span> Hertz aparece #2 solo con la página genérica de cargos; players chicos ganan por especificidad, algo que Hertz puede replicar con su escala de sucursales patagónicas.</p>
+        <p><span class="kw-label">SERP observada:</span> Especialistas regionales de nicho (Modena Patagonia x2, Invernalia Rent a Car, Línea Sur) superan a Hertz gracias a contenido hiper-específico de la ruta.</p>
+        <p><span class="kw-label">Contenido recomendado:</span> Guía práctica “Cómo cruzar a Chile con un auto alquilado de Hertz” con checklist de documentación, seguro internacional y cargo por cruce.</p>
+      </div>
+
+      <div class="kw-card">
+        <span class="kw-ramo">Empresas</span>
+        <h4>&ldquo;alquiler de camionetas para empresas argentina&rdquo;</h4>
+        <div class="kw-tags">
+          <span class="kw-tag">Transaccional B2B de alto valor</span>
+          <span class="kw-tag dif-alta">Dificultad: Alta</span>
+          <span class="kw-tag">Volumen: Medio</span>
+        </div>
+        <p><span class="kw-label">Por qué:</span> Cero presencia de Hertz en el top 10, pese a que sí tiene camionetas/utilitarios en su flota — el gap más claro de toda la investigación.</p>
+        <p><span class="kw-label">SERP observada:</span> Dominan especialistas dedicados (alquilerdecamioneta.com.ar) y jugadores B2B consolidados (Omega, Alamo, Bairesrentacar, KINTO, Rentauto).</p>
+        <p><span class="kw-label">Contenido recomendado:</span> Landing de producto “Alquiler de camionetas y utilitarios para empresas” segmentada por tipo de vehículo, con formulario de cotización corporativa.</p>
+      </div>
+
+      <div class="kw-card">
+        <span class="kw-ramo">Empresas</span>
+        <h4>&ldquo;alquiler de autos para empresas con factura A convenio corporativo&rdquo;</h4>
+        <div class="kw-tags">
+          <span class="kw-tag">Transaccional B2B muy específica</span>
+          <span class="kw-tag dif-alta">Dificultad: Alta</span>
+          <span class="kw-tag">Volumen: Bajo-medio</span>
+        </div>
+        <p><span class="kw-label">Por qué:</span> Cero presencia de hertz.com.ar en la SERP. Pain point fiscal real (deducción de IVA) de decisores de compra corporativos que hoy no encuentran respuesta de la marca.</p>
+        <p><span class="kw-label">SERP observada:</span> Dominan players regionales con landing corporativa dedicada (Enterprise, Adobe Rent a Car, National); hasta Hertz México aparece, pero no Hertz Argentina.</p>
+        <p><span class="kw-label">Contenido recomendado:</span> Landing “Convenios corporativos Hertz Argentina” detallando facturación A, flotas, kilometraje y proceso de alta, con formulario comercial.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="report-section" id="plan">
+    <div class="section-inner">
+      <div class="section-kicker">08 &middot; Plan de acción</div>
+      <h2 class="section-title">25 acciones priorizadas por impacto y esfuerzo</h2>
+      <p class="section-lede">Organizado en 3 horizontes. Impacto y esfuerzo son estimaciones del consultor basadas en los hallazgos verificados de esta auditoría.</p>
+      <div class="kanban">
+        <div class="kanban-col">
+          <h4>Victorias rápidas</h4>
+          <div class="kcount">0-4 semanas &middot; 10 acciones</div>
+          
+        <div class="kcard">
+          <h5>Eliminar el H1 duplicado de la Home</h5>
+          <p>Dejar un único H1 (“Alquiler de autos en Argentina con Hertz”) y bajar el segundo a un subtítulo visual sin etiqueta H1.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Bajo</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Investigar el H1 “Cargando...”</h5>
+          <p>Revisar con Search Console si Googlebot indexa el placeholder en Quiénes somos y en el hub de Sucursales.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Bajo</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Añadir alt a las imágenes de Flota y Coberturas</h5>
+          <p>37 imágenes en Flota y 27 en Coberturas sin alt: describir modelo/categoría de vehículo en cada una.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Bajo</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Reescribir 3 meta descriptions cortas</h5>
+          <p>Coberturas (53c), Cargos adicionales (57c) y Convenio Empresas (61c) a 120-155 caracteres con CTA concreto.</p>
+          <div class="ktags">
+            <span class="ktag impact-medio">Impacto Medio</span>
+            <span class="ktag effort">Esfuerzo Bajo</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Acortar la meta description de Flota</h5>
+          <p>De 220 a ~155 caracteres para evitar el truncamiento en el SERP.</p>
+          <div class="ktags">
+            <span class="ktag impact-medio">Impacto Medio</span>
+            <span class="ktag effort">Esfuerzo Bajo</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Corregir titles cortos y genéricos</h5>
+          <p>Home, Coberturas, Cargos adicionales y Convenio Empresas: incluir marca + keyword de intención en cada uno.</p>
+          <div class="ktags">
+            <span class="ktag impact-medio">Impacto Medio</span>
+            <span class="ktag effort">Esfuerzo Bajo</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Enlazar 3-4 posts del blog a las landings</h5>
+          <p>Ej.: “Requisitos para alquilar auto” → landing de Flota; artículos de rutas → landing de Coberturas.</p>
+          <div class="ktags">
+            <span class="ktag impact-medio">Impacto Medio</span>
+            <span class="ktag effort">Esfuerzo Bajo</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Corregir el mismatch de canonical en Home</h5>
+          <p>Igualar el canonical (con barra final) a la URL real servida.</p>
+          <div class="ktags">
+            <span class="ktag impact-bajo">Impacto Bajo</span>
+            <span class="ktag effort">Esfuerzo Bajo</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Auditar la directiva “nocache” en robots</h5>
+          <p>Confirmar con desarrollo si es intencional; no es dañina pero es una anomalía sin justificación clara.</p>
+          <div class="ktags">
+            <span class="ktag impact-bajo">Impacto Bajo</span>
+            <span class="ktag effort">Esfuerzo Bajo</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Publicar el artículo de “mejor época para alquilar”</h5>
+          <p>Quick win de keyword ya validada con SERP real, aprovechando el blog existente y activo.</p>
+          <div class="ktags">
+            <span class="ktag impact-medio">Impacto Medio</span>
+            <span class="ktag effort">Esfuerzo Bajo</span>
+          </div>
+        </div>
+        </div>
+        <div class="kanban-col">
+          <h4>Medio plazo</h4>
+          <div class="kcount">1-3 meses &middot; 9 acciones</div>
+          
+        <div class="kcard">
+          <h5>Implementar schema Organization + LocalBusiness</h5>
+          <p>En Home, y BreadcrumbList en todo el sitio, para habilitar rich results básicos.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Medio</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Implementar schema FAQPage</h5>
+          <p>En la página de Preguntas frecuentes: las ~19-20 preguntas ya están redactadas, falta el marcado.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Medio</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Reescribir Convenio Empresas</h5>
+          <p>De 85 a un mínimo de 400-500 palabras con argumentario comercial real: beneficios, condiciones, facturación, flota corporativa.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Medio</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Landing dedicada “Alquiler en Ezeiza”</h5>
+          <p>Con tarifas por categoría de vehículo, para competir de igual a igual con los comparadores que hoy dominan esa keyword.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Medio</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Tabla comparativa visual de coberturas</h5>
+          <p>Planes Base/Smart/Plus con checkmarks y franquicias: ningún competidor auditado la tiene — oportunidad de diferenciación real.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Medio</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Landing “camionetas para empresas”</h5>
+          <p>Gap total detectado en la investigación de keywords: cero presencia de Hertz pese a tener la flota.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Medio</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>H3 por categoría de vehículo en Flota</h5>
+          <p>Agrupar el catálogo bajo Económico / SUV / Prestige para mejorar escaneabilidad y estructura semántica.</p>
+          <div class="ktags">
+            <span class="ktag impact-medio">Impacto Medio</span>
+            <span class="ktag effort">Esfuerzo Medio</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Artículo “CDW vs. LDW”</h5>
+          <p>Comparativo con tabla, enlazado desde la página de Coberturas.</p>
+          <div class="ktags">
+            <span class="ktag impact-medio">Impacto Medio</span>
+            <span class="ktag effort">Esfuerzo Medio</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Artículo “seguro de tarjeta vs. cobertura Hertz”</h5>
+          <p>Ataca directamente la objeción de compra más común antes de contratar cobertura.</p>
+          <div class="ktags">
+            <span class="ktag impact-medio">Impacto Medio</span>
+            <span class="ktag effort">Esfuerzo Medio</span>
+          </div>
+        </div>
+        </div>
+        <div class="kanban-col">
+          <h4>Largo plazo</h4>
+          <div class="kcount">3-9 meses &middot; 6 acciones</div>
+          
+        <div class="kcard">
+          <h5>Schema Product/Offer por plan y vehículo</h5>
+          <p>Marcado estructurado en cada plan de cobertura y cada categoría de vehículo del catálogo.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Alto</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Rediseño de arquitectura de silo</h5>
+          <p>Enlazado sistemático y bidireccional blog ↔ landings ↔ FAQ en todo el sitio.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Alto</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Auditoría de renderizado JS con Search Console</h5>
+          <p>Verificar con Googlebot real si el H1 “Cargando...” se resuelve antes de la indexación.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Medio-alto</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Landing corporativa “convenios y factura A”</h5>
+          <p>Proceso de alta como cliente empresa, atacando la keyword B2B de mayor especificidad detectada.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Alto</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Programa editorial trimestral</h5>
+          <p>Ampliar el blog hacia contenido transaccional de las 4 líneas de negocio, no solo turístico/informacional.</p>
+          <div class="ktags">
+            <span class="ktag impact-alto">Impacto Alto</span>
+            <span class="ktag effort">Esfuerzo Alto</span>
+          </div>
+        </div>
+
+        <div class="kcard">
+          <h5>Automatizar lastmod en el sitemap</h5>
+          <p>Añadir fechas de última modificación reales para mejorar la señal de frescura ante los rastreadores.</p>
+          <div class="ktags">
+            <span class="ktag impact-bajo">Impacto Bajo</span>
+            <span class="ktag effort">Esfuerzo Medio</span>
+          </div>
+        </div>
+        </div></div>
+    </div>
+  </section>
+
+  <section class="report-section" id="metodologia">
+    <div class="section-inner">
+      <div class="section-kicker">09 &middot; Metodología</div>
+      <h2 class="section-title">Cómo se hizo esta auditoría</h2>
+      <ul class="method-list">
+        <li><strong>Adaptación de alcance al sector:</strong> el brief original de esta auditoría traía un esquema pensado para una aseguradora generalista (4 "ramos": coche, hogar, salud, vida). Hertz Argentina es una empresa de alquiler de autos, no una aseguradora, así que los 4 "ramos" se remapearon a las 4 líneas de negocio reales del sitio: <strong>Flota de autos</strong> (alquiler de vehículos, equivalente a "coche"), <strong>Coberturas y garantías</strong> (equivalente a "seguro de autos"), <strong>Cargos adicionales</strong> (equivalente a "adicionales") y <strong>Convenio Empresas</strong> (equivalente a "empresas"). Del mismo modo, los competidores se seleccionaron como marcas de alquiler de autos con presencia real en Argentina (Avis, Europcar, Sixt), no aseguradoras.</li>
+        <li><strong>Bloqueo de red y uso de WebFetch como método principal:</strong> el entorno de generación de este informe tiene el egreso HTTP directo bloqueado por política de red del sandbox (confirmado contra <code>curl</code> a hertz.com.ar, avis.com.ar, europcar.com.ar, sixt.com y hasta contra dominios de control como google.com y example.com &mdash; error 403 "Host not in allowlist" del proxy del entorno, no un bloqueo de los sitios). Por lo tanto, el 100% de los datos de este informe se obtuvo con la herramienta de fetch web disponible, que convierte HTML a texto/markdown mediante un modelo intermedio, no mediante lectura literal de HTML crudo. Cada página se consultó con al menos dos prompts independientes (uno de extracción general, otro de búsqueda dirigida de elementos específicos como <code>application/ld+json</code>) y se reportan como <strong>"no verificable"</strong> los datos que no pudieron confirmarse con consistencia entre pasadas &mdash; en particular, algunos conteos exactos de imágenes mostraron variación entre consultas repetidas a la misma URL, y se reportan como rango aproximado en esos casos.</li>
+        <li><strong>Datos estructurados (schema.org):</strong> se buscó explícitamente el string <code>application/ld+json</code> en el contenido accesible de cada página. No se detectó en ninguna de las 11 páginas auditadas (5 de Hertz + 6 de competidores). Esta ausencia se reporta con la salvedad de que no equivale a una lectura de HTML crudo al 100%; se recomienda verificación puntual con Google Rich Results Test antes de tratarla como hallazgo definitivo para decisiones de alto impacto.</li>
+        <li><strong>Rendimiento y front-end:</strong> sin PageSpeed Insights ni cifras de Core Web Vitals (LCP/INP/CLS), tal como exige el alcance de esta auditoría. El diagnóstico es arquitectónico y cualitativo, basado en lo que la herramienta de inspección pudo observar del marcado de la home y de la landing de Flota: framework detectado (Next.js), parámetros de optimización de imágenes, y ausencia/presencia de señales de terceros. Ningún milisegundo, puntuación Lighthouse ni cifra de Core Web Vitals fue inventado ni estimado numéricamente.</li>
+        <li><strong>Gráficos sin Chart.js vía CDN ni npm:</strong> el mismo bloqueo de red descrito arriba impidió instalar Chart.js por npm o descargarlo de cualquier CDN (unpkg, cdnjs, jsDelivr, e incluso el registro de npm y PyPI devolvieron el mismo error de política de red). Para no incumplir el requisito de un informe 100% autocontenido y sin riesgo de gráficos rotos, los 5 gráficos de este informe se construyeron con un motor propio de SVG + JavaScript vanilla (sin dependencias externas), replicando el comportamiento esperado: animación, tooltips, coloreado semáforo y redibujado al cambiar de modo claro/oscuro.</li>
+        <li><strong>Autoridad de marca:</strong> no hay acceso en este entorno a herramientas de backlinks (Ahrefs, Majestic, Moz). El eje "Autoridad" del radar y del desglose por área es una estimación cualitativa del consultor basada en señales indirectas (reconocimiento internacional de marca, antigüedad, presencia declarada en 160+ países), explícitamente etiquetada como tal &mdash; no debe leerse como Domain Rating ni Domain Authority reales.</li>
+        <li><strong>Oportunidades de keywords:</strong> cada una de las 10 keywords recomendadas fue buscada realmente en Google durante esta auditoría (20 búsquedas ejecutadas en total, incluyendo candidatas descartadas). Dificultad y volumen son estimaciones cualitativas (alta/media/baja &middot; alto/medio/bajo) justificadas por la composición observada de cada SERP. Ninguna cifra numérica de volumen de búsqueda ni de keyword difficulty score fue inventada.</li>
+        <li><strong>Fecha de ejecución:</strong> 11 de julio de 2026. Los sitios web cambian con frecuencia: se recomienda revalidar los hallazgos críticos antes de una decisión de inversión mayor.</li>
+      </ul>
+    </div>
+  </section>
+  <footer class="report-footer">Consultoría SEO &middot; Auditoría independiente &middot; 11 de julio de 2026</footer>
+</main>
+</div>
+
+<script>
+window.REPORT_DATA = {"areas": [{"label": "SEO On-Page", "value": 38, "sev": "red"}, {"label": "SEO Técnico", "value": 44, "sev": "red"}, {"label": "Contenido", "value": 40, "sev": "red"}, {"label": "Rendimiento", "value": 60, "sev": "yellow"}, {"label": "Experiencia móvil", "value": 58, "sev": "yellow"}, {"label": "Autoridad de marca", "value": 64, "sev": "yellow"}], "frontend": [{"label": "Framework JS", "value": 3, "sev": "green", "tooltip": "Next.js confirmado (rutas _next/static y _next/image con optimización automática de imágenes)."}, {"label": "Optimización imágenes", "value": 2, "sev": "yellow", "tooltip": "Next/Image con parámetros w= y q=75 detectados; formato exacto (webp/avif) no verificable."}, {"label": "GTM / Analytics", "value": 1, "sev": "yellow", "tooltip": "No se detectaron contenedores GTM-XXXX ni tags G-XXXX, pero no es concluyente: WebFetch no expone las etiquetas de script de forma fiable."}, {"label": "Consentimiento cookies", "value": 1, "sev": "yellow", "tooltip": "No se detectó banner de consentimiento visible. No verificable al 100% por limitación de la herramienta de inspección."}, {"label": "Chat en vivo", "value": 1, "sev": "yellow", "tooltip": "No se detectó widget de chat integrado; sí hay un ícono de acceso directo a WhatsApp."}, {"label": "reCAPTCHA", "value": 1, "sev": "yellow", "tooltip": "No detectable con las herramientas disponibles en este entorno."}, {"label": "Recursos en <head>", "value": 1, "sev": "yellow", "tooltip": "No se pudo inspeccionar el <head> completo (limitación de la herramienta de fetch, ver Metodología)."}], "contentDepth": [{"label": "Hertz (Flota)", "value": 335, "color": "var(--accent)"}, {"label": "Avis", "value": 75, "color": "#9aa1b8"}, {"label": "Europcar", "value": 290, "color": "#9aa1b8"}, {"label": "Sixt", "value": 2100, "color": "#9aa1b8"}], "kwStack": [{"label": "Alquiler", "segments": [{"name": "Alta", "value": 2, "color": "var(--sev-red)"}, {"name": "Media", "value": 1, "color": "var(--sev-yellow)"}]}, {"label": "Coberturas", "segments": [{"name": "Alta", "value": 2, "color": "var(--sev-red)"}, {"name": "Media", "value": 1, "color": "var(--sev-yellow)"}]}, {"label": "Adicionales", "segments": [{"name": "Alta", "value": 1, "color": "var(--sev-red)"}, {"name": "Media", "value": 1, "color": "var(--sev-yellow)"}]}, {"label": "Empresas", "segments": [{"name": "Alta", "value": 2, "color": "var(--sev-red)"}]}], "radarAxes": ["On-Page", "Técnico", "Contenido", "Rendimiento", "Móvil", "Autoridad"], "radarSeries": [{"name": "Hertz Argentina", "color": "var(--accent)", "fillOpacity": 0.22, "strokeWidth": 2.5, "values": [38, 44, 40, 60, 58, 64]}, {"name": "Avis Argentina", "color": "#c94f4f", "fillOpacity": 0.06, "strokeWidth": 1.5, "values": [25, 35, 25, 50, 50, 68]}, {"name": "Europcar Argentina", "color": "#5a7fa6", "fillOpacity": 0.06, "strokeWidth": 1.5, "values": [50, 42, 48, 50, 50, 62]}, {"name": "Sixt Argentina", "color": "#8a6fb0", "fillOpacity": 0.06, "strokeWidth": 1.5, "values": [55, 40, 72, 52, 52, 70]}]};
+(function () {
+  "use strict";
+
+  /* ---------- THEME ---------- */
+  function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* file:// o storage bloqueado */ } }
+
+  var root = document.documentElement;
+  var savedTheme = safeGet("gt-theme");
+  if (savedTheme === "dark") root.classList.add("dark");
+
+  function applyThemeIcon() {
+    var btn = document.getElementById("theme-toggle");
+    if (btn) btn.textContent = root.classList.contains("dark") ? "☀" : "☾";
+  }
+  applyThemeIcon();
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var btn = document.getElementById("theme-toggle");
+    if (btn) {
+      btn.addEventListener("click", function () {
+        root.classList.toggle("dark");
+        safeSet("gt-theme", root.classList.contains("dark") ? "dark" : "light");
+        applyThemeIcon();
+        if (window.GTChart) window.GTChart.redrawAll();
+      });
+    }
+    var pdfBtn = document.getElementById("pdf-btn");
+    if (pdfBtn) pdfBtn.addEventListener("click", function () { window.print(); });
+
+    initScrollProgress();
+    initActiveNav();
+    initAccordions();
+    initSeverityFilter();
+    initGauge();
+    initCounters();
+    initTableSort();
+    initCharts();
+    initPrintHandlers();
+  });
+
+  /* ---------- SCROLL PROGRESS ---------- */
+  function initScrollProgress() {
+    var bar = document.getElementById("scroll-progress");
+    if (!bar) return;
+    function update() {
+      var h = document.documentElement;
+      var scrolled = h.scrollTop;
+      var height = h.scrollHeight - h.clientHeight;
+      var pct = height > 0 ? (scrolled / height) * 100 : 0;
+      bar.style.width = pct + "%";
+    }
+    document.addEventListener("scroll", update, { passive: true });
+    update();
+  }
+
+  /* ---------- ACTIVE NAV (IntersectionObserver) ---------- */
+  function initActiveNav() {
+    var links = Array.prototype.slice.call(document.querySelectorAll(".side-nav a"));
+    if (!links.length || !("IntersectionObserver" in window)) return;
+    var map = {};
+    links.forEach(function (l) { map[l.getAttribute("href").slice(1)] = l; });
+    var sections = Array.prototype.slice.call(document.querySelectorAll("section.report-section"));
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove("active"); });
+          var link = map[entry.target.id];
+          if (link) link.classList.add("active");
+        }
+      });
+    }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
+    sections.forEach(function (s) { obs.observe(s); });
+  }
+
+  /* ---------- ACCORDIONS ---------- */
+  function initAccordions() {
+    document.querySelectorAll(".accordion-head").forEach(function (head) {
+      head.addEventListener("click", function () {
+        head.parentElement.classList.toggle("open");
+      });
+    });
+  }
+
+  /* ---------- FILTRO DE SEVERIDAD (global) ---------- */
+  function initSeverityFilter() {
+    var buttons = document.querySelectorAll(".sev-btn");
+    var findings = document.querySelectorAll(".finding");
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        buttons.forEach(function (b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        var target = btn.getAttribute("data-filter");
+        findings.forEach(function (f) {
+          if (target === "all" || f.classList.contains("sev-" + target)) {
+            f.classList.remove("filtered-out");
+          } else {
+            f.classList.add("filtered-out");
+          }
+        });
+      });
+    });
+  }
+
+  /* ---------- CONTADORES DE HALLAZGOS (stat strip, calculado desde el DOM) ---------- */
+  function initCounters() {
+    var findings = document.querySelectorAll(".finding");
+    var counts = { red: 0, yellow: 0, green: 0 };
+    findings.forEach(function (f) {
+      if (f.classList.contains("sev-red")) counts.red++;
+      else if (f.classList.contains("sev-yellow")) counts.yellow++;
+      else if (f.classList.contains("sev-green")) counts.green++;
+    });
+    var total = counts.red + counts.yellow + counts.green;
+    setText("stat-total", total);
+    setText("stat-red", counts.red);
+    setText("stat-yellow", counts.yellow);
+    setText("stat-green", counts.green);
+  }
+  function setText(id, val) { var el = document.getElementById(id); if (el) animateNumber(el, val); }
+
+  function animateNumber(el, target) {
+    var start = 0, dur = 900, t0 = performance.now();
+    function step(t) {
+      var p = Math.min(1, (t - t0) / dur);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(start + (target - start) * eased);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ---------- VELOCÍMETRO SVG SEMICIRCULAR ---------- */
+  function initGauge() {
+    var svg = document.getElementById("gauge-svg");
+    var numEl = document.getElementById("gauge-number");
+    if (!svg || !numEl) return;
+    var score = parseInt(svg.getAttribute("data-score"), 10) || 0;
+    var needle = document.getElementById("gauge-needle");
+    // -90deg (score 0) a +90deg (score 100), pivote en (180,180)
+    var angle = -90 + (score / 100) * 180;
+    requestAnimationFrame(function () {
+      setTimeout(function () {
+        needle.style.transform = "rotate(" + angle + "deg)";
+      }, 250);
+    });
+    animateNumber(numEl, score);
+  }
+
+  /* ---------- TABLA COMPARATIVA: orden + mejor/peor por fila ---------- */
+  function initTableSort() {
+    var table = document.getElementById("compare-table");
+    if (!table) return;
+    var tbody = table.querySelector("tbody");
+
+    // Mejor / peor por fila, según data-score (0,1,2) de cada celda de sitio
+    tbody.querySelectorAll("tr").forEach(function (tr) {
+      var cells = Array.prototype.slice.call(tr.querySelectorAll("td.site-cell"));
+      var scores = cells.map(function (td) { return parseFloat(td.getAttribute("data-score")); });
+      var max = Math.max.apply(null, scores), min = Math.min.apply(null, scores);
+      if (max === min) return; // todas iguales, sin best/worst
+      cells.forEach(function (td) {
+        var s = parseFloat(td.getAttribute("data-score"));
+        if (s === max) td.classList.add("best");
+        else if (s === min) td.classList.add("worst");
+      });
+    });
+
+    // Orden por columna
+    table.querySelectorAll("thead th[data-sort-key]").forEach(function (th) {
+      th.addEventListener("click", function () {
+        var key = th.getAttribute("data-sort-key");
+        var asc = th.getAttribute("data-asc") !== "true";
+        table.querySelectorAll("thead th").forEach(function (h) { h.removeAttribute("data-asc"); h.querySelector(".arrow") && (h.querySelector(".arrow").textContent = ""); });
+        th.setAttribute("data-asc", asc);
+        var arrow = th.querySelector(".arrow");
+        if (arrow) arrow.textContent = asc ? "▲" : "▼";
+        var rows = Array.prototype.slice.call(tbody.querySelectorAll("tr"));
+        rows.sort(function (a, b) {
+          var av = parseFloat(a.querySelector('[data-key="' + key + '"]').getAttribute("data-value"));
+          var bv = parseFloat(b.querySelector('[data-key="' + key + '"]').getAttribute("data-value"));
+          return asc ? av - bv : bv - av;
+        });
+        rows.forEach(function (r) { tbody.appendChild(r); });
+      });
+    });
+  }
+
+  /* ---------- GRÁFICOS ---------- */
+  function initCharts() {
+    if (!window.GTChart || !window.REPORT_DATA) return;
+    var D = window.REPORT_DATA;
+
+    GTChart.bar("chart-areas", {
+      ariaLabel: "Puntuación SEO por área",
+      unit: "",
+      data: D.areas.map(function (a) { return { label: a.label, value: a.value, sev: a.sev, tooltip: a.value + "/100 — " + a.label }; })
+    });
+
+    GTChart.bar("chart-frontend", {
+      ariaLabel: "Diagnóstico de front-end",
+      max: 3.4,
+      unit: "",
+      labelRotate: true,
+      data: D.frontend.map(function (f) { return { label: f.label, value: f.value, sev: f.sev, tooltip: f.tooltip }; })
+    });
+
+    GTChart.groupedBar("chart-content", {
+      ariaLabel: "Profundidad de contenido comparada",
+      unit: "",
+      data: D.contentDepth
+    });
+
+    GTChart.stackedBar("chart-keywords", {
+      ariaLabel: "Mapa de oportunidades de keyword",
+      categories: D.kwStack,
+      legend: [{ name: "Dificultad alta", color: "var(--sev-red)" }, { name: "Dificultad media", color: "var(--sev-yellow)" }]
+    });
+
+    GTChart.radar("chart-radar", {
+      ariaLabel: "Índice de auditoría 0-100 — Hertz vs. competidores",
+      axes: D.radarAxes,
+      series: D.radarSeries
+    });
+  }
+
+  /* ---------- IMPRESIÓN: abrir acordeones, restaurar estado ---------- */
+  var openStateBeforePrint = [];
+  function initPrintHandlers() {
+    window.addEventListener("beforeprint", function () {
+      openStateBeforePrint = [];
+      document.querySelectorAll(".accordion").forEach(function (acc) {
+        openStateBeforePrint.push(acc.classList.contains("open"));
+        acc.classList.add("open");
+      });
+      document.querySelectorAll(".finding").forEach(function (f) { f.classList.remove("filtered-out"); });
+    });
+    window.addEventListener("afterprint", function () {
+      document.querySelectorAll(".accordion").forEach(function (acc, i) {
+        if (!openStateBeforePrint[i]) acc.classList.remove("open");
+      });
+      var activeBtn = document.querySelector(".sev-btn.active");
+      if (activeBtn) activeBtn.click();
+    });
+  }
+})();
+
+</script>
+</body>
+</html>
