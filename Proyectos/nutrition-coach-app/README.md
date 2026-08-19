@@ -2,10 +2,11 @@
 
 App que arma tu despensa a partir de una foto de tu ticket de compra (o carga manual) y genera recetas personalizadas según tu perfil, objetivos e ingredientes disponibles — usando IA generativa (Google Gemini) para leer el ticket y crear las recetas.
 
-Existe en dos formas a partir del mismo código: una **PWA web** y una **app Android nativa** con todo el código empaquetado dentro del APK.
+Existe en dos formas a partir del mismo código: una **PWA web** (funciona abriendo un solo archivo, sin servidor) y una **app Android nativa** con todo el código empaquetado dentro del APK.
 
-**Demo web:** https://agustin-94.github.io/coach-nutricional/ *(reemplazar si el link real es distinto)*
-**APK para Android:** archivo `coach-nutricional.apk` en esta misma carpeta
+**Probala vos mismo, sin necesidad de un link en vivo:**
+- 📱 **Android:** descargá `coach-nutricional.apk` de esta carpeta e instalala (activando "orígenes desconocidos" la primera vez).
+- 🌐 **Navegador:** descargá `index.html` de esta carpeta y abrilo directo con Chrome — no necesita estar hosteado en ningún lado, corre igual como archivo local.
 
 > 🤖 **Integración con IA:** usa la API de **Google Gemini** (capa gratuita) para (1) leer una foto de ticket de supermercado y extraer productos, cantidades y categorías, y (2) generar recetas a medida combinando el perfil nutricional del usuario con los ingredientes reales de su despensa. La respuesta se fuerza a JSON estricto (`responseMimeType: application/json`) para que sea siempre parseable.
 
@@ -26,7 +27,7 @@ Existe en dos formas a partir del mismo código: una **PWA web** y una **app And
 ### Versión web (`index.html`)
 - **React 18 sin build step**: el JSX se transforma en el propio navegador con **Babel Standalone**; React, ReactDOM e íconos (`lucide-react`) se cargan como scripts UMD desde `unpkg`. Un solo archivo, sin Node ni bundler.
 - Persistencia en `localStorage` del navegador.
-- Publicada en **GitHub Pages**.
+- Se puede abrir directo como archivo local (`index.html` en esta carpeta) o hostear donde quieras (ej. GitHub Pages).
 
 ### Versión Android nativa (`/android`)
 Evolucionó de "WebView apuntando a la URL de GitHub Pages" a **una app totalmente autocontenida**:
@@ -54,10 +55,10 @@ android/
 
 ## Stack
 
-`React 18` · `Tailwind CSS` · `Babel Standalone` · `lucide-react` · `Google Gemini API` · `Kotlin` · `Android WebView + WebViewAssetLoader` · `GitHub Pages`
+`React 18` · `Tailwind CSS` · `Babel Standalone` · `lucide-react` · `Google Gemini API` · `Kotlin` · `Android WebView + WebViewAssetLoader`
 
 ## Cómo correrla vos mismo
 
-**Web:** abrí el link de demo, andá a **Ajustes** y pegá tu propia API key de Gemini (gratis, sin tarjeta) desde [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Completá el onboarding y ya podés usarla.
+**Web:** descargá `index.html` de esta carpeta, abrilo con Chrome, andá a **Ajustes** y pegá tu propia API key de Gemini (gratis, sin tarjeta) desde [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Completá el onboarding y ya podés usarla.
 
 **Android:** instalá el `.apk` (activando "orígenes desconocidos" la primera vez), o compilá el proyecto vos mismo desde `/android` en Android Studio.
