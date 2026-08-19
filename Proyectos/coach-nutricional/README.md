@@ -12,7 +12,7 @@ Existe en dos formas a partir del mismo código: una **PWA web** (funciona abrie
 
 ## Capturas
 
-*(agregar screenshots del onboarding, despensa y recetas aquí)*
+*(Me faltan agregar capturas debido al uso gratuito de la ia y me falta corregir errores, ya que solo esta funcionando la carga manual de los productos en el almacen)*
 
 ## Funcionalidades
 
