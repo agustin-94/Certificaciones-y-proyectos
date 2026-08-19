@@ -11,7 +11,7 @@ análisis de datos y ciberseguridad aplicada a entornos industriales.
 
 ## Proyectos
 
-### 🌀 [Simulación de turbina con control PID](https://github.com/rambex420/Certificaciones-y-proyectos/blob/main/turbina-pid)
+### 🌀 [Simulación de turbina con control PID](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/turbina-pid)
 
 Simulación en Python de una turbina industrial con control automático de
 RPM mediante un algoritmo PID con anti-windup. Incluye visualización de la
@@ -21,7 +21,7 @@ respuesta del sistema con Matplotlib.
 
 ---
 
-### 💧 [Automatización con Node-RED (tanque de agua)](https://github.com/rambex420/Certificaciones-y-proyectos/blob/main/node-red-tanque)
+### 💧 [Automatización con Node-RED (tanque de agua)](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/node-red-tanque)
 
 Simulación de un proceso industrial de control de nivel de tanque, con
 lógica de bomba on/off tipo PLC e histéresis para evitar oscilaciones.
@@ -30,7 +30,7 @@ lógica de bomba on/off tipo PLC e histéresis para evitar oscilaciones.
 
 ---
 
-### 🔢 [Sistema OCR de dígitos + MQTT](https://github.com/rambex420/Certificaciones-y-proyectos/blob/main/ocr-digitos)
+### 🔢 [Sistema OCR de dígitos + MQTT](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/ocr-digitos)
 
 Red neuronal (Keras/TensorFlow) entrenada sobre MNIST para reconocer
 dígitos manuscritos, integrada con MQTT para publicar cada lectura como lo
@@ -40,7 +40,7 @@ haría un sistema de digitalización de medidores industriales.
 
 ---
 
-### 🛢️ [Pronóstico de producción de petróleo (XGBoost)](https://github.com/rambex420/Certificaciones-y-proyectos/blob/main/petroleo-forecast)
+### 🛢️ [Pronóstico de producción de petróleo (XGBoost)](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/petroleo-forecast)
 
 Análisis y forecasting de series de tiempo sobre datos públicos de
 producción de petróleo (cuenca Golfo San Jorge), con un modelo de gradient
@@ -50,7 +50,7 @@ boosting (XGBoost) y evaluación contra los últimos períodos reales.
 
 ---
 
-### 🔗 [Dashboard OCR + MQTT (integración Python ↔ Node-RED)](https://github.com/rambex420/Certificaciones-y-proyectos/blob/main/dashboard-ocr-mqtt)
+### 🔗 [Dashboard OCR + MQTT (integración Python ↔ Node-RED)](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/dashboard-ocr-mqtt)
 
 Proyecto integrador que conecta el reconocimiento de dígitos en Python con
 un dashboard en tiempo real en Node-RED, usando MQTT como capa de
@@ -60,7 +60,7 @@ mensajería — el flujo completo de datos que se ve en un sistema IT/OT real.
 
 ---
 
-### 🔥 [Rescoldo — Web de restaurante con animaciones 3D](https://github.com/rambex420/Certificaciones-y-proyectos/tree/main/rescoldo-web)
+### 🔥 [Rescoldo — Web de restaurante con animaciones 3D](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/rescoldo-web)
 
 Sitio web de un restaurante de cocina de fuego patagónica, con scroll animations
 (GSAP + ScrollTrigger) y piezas 3D generadas con Three.js para representar
@@ -72,20 +72,21 @@ cliente pueda actualizarlo sin tocar código.
 
 ---
 
-### 🥗 [Coach Nutricional — App con IA (Claude Artifact)](https://github.com/rambex420/Certificaciones-y-proyectos/tree/main/nutrition-coach-app)
+### 🥗 [Coach Nutricional — App web + Android nativa con IA](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/coach-nutricional)
 
-App de coaching nutricional construida como artifact interactivo con la API
-de Claude: el usuario completa un perfil (objetivos, actividad,
-restricciones alimentarias), fotografía sus tickets de compra para que la IA
-detecte los productos y arme su despensa automáticamente, y genera recetas
-personalizadas según lo que tiene disponible. Persistencia entre sesiones
-con almacenamiento clave/valor.
+App de coaching nutricional: el usuario completa un perfil (objetivos,
+actividad, restricciones alimentarias), fotografía sus tickets de compra
+(o carga productos manualmente) para armar su despensa, y genera recetas
+personalizadas según lo que tiene disponible. Empezó como artifact de
+Claude y evolucionó a **app Android nativa** (Kotlin + WebView) con todo
+el código empaquetado dentro del APK — funciona sin depender de ningún
+servidor propio, salvo por la consulta a la IA.
 
-**Stack:** React · Claude (Anthropic API — visión + generación de texto) · lucide-react · Tailwind CSS
+**Stack:** React · Google Gemini API (visión + generación de texto) · Kotlin · Android WebView · lucide-react · Tailwind CSS
 
 ---
 
-### 🔍 [Auditoría SEO — Hertz Argentina (proyecto propio)](https://github.com/rambex420/Certificaciones-y-proyectos/tree/main/hertz-seo-auditoria)
+### 🔍 [Auditoría SEO — Hertz Argentina (proyecto propio)](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/hertz-seo-auditoria)
 
 Auditoría SEO independiente sobre hertz.com.ar: puntuación por área,
 diagnóstico técnico y de arquitectura, análisis de contenido, comparativa
@@ -99,7 +100,7 @@ informe HTML navegable con modo oscuro y exportación a PDF.
 
 ## Tecnologías generales
 
-`Python` `Node-RED` `MQTT` `OPC UA / Modbus (conceptual)` `Pandas` `NumPy` `Matplotlib` `Seaborn` `scikit-learn` `XGBoost` `TensorFlow/Keras` `React` `GSAP / Three.js` `Redes y soporte IT` `Ciberseguridad (OSINT, CVEs, Kali Linux)`
+`Python` `Node-RED` `MQTT` `OPC UA / Modbus (conceptual)` `Pandas` `NumPy` `Matplotlib` `Seaborn` `scikit-learn` `XGBoost` `TensorFlow/Keras` `React` `Kotlin / Android` `GSAP / Three.js` `Redes y soporte IT` `Ciberseguridad (OSINT, CVEs, Kali Linux)`
 
 ## Objetivo profesional
 
