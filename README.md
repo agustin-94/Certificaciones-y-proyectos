@@ -107,3 +107,12 @@ informe HTML navegable con modo oscuro y exportación a PDF.
 Busco mi primera experiencia formal en IT / soporte técnico / automatización,
 donde pueda aplicar y seguir desarrollando estos conocimientos en un entorno
 real de trabajo.
+
+### 🐳 [Stack de monitoreo con Docker — Node-RED + InfluxDB + Grafana](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/docker-monitoreo-stack)
+
+Proyecto de práctica del curso "Virtualización y Docker" (Ingelearn): stack
+completo orquestado con Docker Compose que simula un sensor industrial en
+Node-RED, persiste las lecturas como serie temporal en InfluxDB, y las
+visualiza en un dashboard de Grafana.
+
+**Stack:** Docker · Docker Compose · Node-RED · InfluxDB · Grafana
