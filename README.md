@@ -86,11 +86,13 @@ cámara IP.
 
 ### 🔥 [Rescoldo — Web de restaurante con animaciones 3D](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/Proyectos/rescoldo-web)
 
-Sitio web de un restaurante de cocina de fuego patagónica, con scroll animations
-(GSAP + ScrollTrigger) y piezas 3D generadas con Three.js para representar
-cada plato insignia sin depender de fotografías. Contenido (carta, horarios,
-contacto) separado en un archivo de datos editable, pensado para que el
-cliente pueda actualizarlo sin tocar código.
+Proyecto demostrativo de mi servicio de desarrollo web a medida: sitio de
+un restaurante de cocina de fuego patagónica, con scroll animations (GSAP +
+ScrollTrigger) y piezas 3D generadas con Three.js para representar cada
+plato insignia sin depender de fotos de stock. Contenido separado en un
+archivo de datos, pensado para reutilizar la misma base de diseño con
+distintos clientes — la actualización de contenido queda a mi cargo, no
+del cliente.
 
 **Stack:** HTML · CSS · JavaScript · GSAP · ScrollTrigger · Three.js
 
