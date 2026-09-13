@@ -7,6 +7,15 @@ SEO on-page, técnico y competitivo sobre un caso real y público).
 
 Presentada como un informe HTML autocontenido, navegable, con modo oscuro.
 
+## Vista previa
+
+![Resumen ejecutivo de la auditoría](ejemplos/auditoria-hertz-1.png)
+
+Puntuación por área (0-100) con navegación lateral a las 9 secciones del
+informe: SEO on-page, técnico, rendimiento, contenido, comparativa
+competitiva, oportunidades de keywords, plan de acción priorizado y
+metodología.
+
 ## Qué incluye
 
 - **Puntuación por área** (on-page, técnico, contenido, arquitectura)
