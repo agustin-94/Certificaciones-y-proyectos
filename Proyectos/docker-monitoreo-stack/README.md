@@ -13,6 +13,16 @@ en un dashboard de Grafana — el mismo patrón que se usa para monitoreo real
 de planta (SCADA/IT-OT), pero corriendo en contenedores en vez de en
 hardware dedicado.
 
+## El pipeline corriendo en vivo
+
+**Node-RED** generando y enviando lecturas simuladas a InfluxDB cada 5 segundos:
+
+![Flow de Node-RED con datos en vivo](ejemplos/docker-stack-grafana1.png)
+
+**Grafana** consultando InfluxDB y graficando la serie temporal de temperatura y presión:
+
+![Dashboard de Grafana con datos reales](ejemplos/docker-stack-grafana2.png)
+
 ## Arquitectura
 
 ```
@@ -61,8 +71,12 @@ adicionales.
    - Organization: `bariloche-lab`
    - Token: `dev-token-cambiar-en-produccion`
    - Default bucket: `planta`
-3. Creá un dashboard con un panel que consulte el measurement `tanque`
-   (campos `temperatura` y `presion`).
+3. Creá un dashboard con un panel **Time series** que consulte:
+   ```flux
+   from(bucket: "planta")
+     |> range(start: -15m)
+     |> filter(fn: (r) => r._measurement == "tanque")
+   ```
 
 ## Por qué estos valores por defecto
 
@@ -79,7 +93,7 @@ real esto iría en variables de entorno / secrets, nunca en el repo.**
   datos de series temporales (**InfluxDB**), sin depender de paquetes
   adicionales — usando la API HTTP nativa de Influx.
 - Armado de un **dashboard de monitoreo** en **Grafana** a partir de esos
-  datos.
+  datos, verificado en vivo con datos reales fluyendo de punta a punta.
 - Aplicación directa de los contenidos del curso de virtualización y
   contenedores a un caso de uso de automatización/IT-OT, en línea con el
   resto del portafolio (`node-red-tanque`, `dashboard-ocr-mqtt`).
