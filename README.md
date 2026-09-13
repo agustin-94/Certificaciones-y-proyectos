@@ -11,7 +11,7 @@ análisis de datos y ciberseguridad aplicada a entornos industriales.
 
 ## Proyectos
 
-### 🌀 [Simulación de turbina con control PID](https://github.com/agustin-94/Certificaciones-y-proyectos/blob/main/turbina-pid)
+### 🌀 [Simulación de turbina con control PID](https://github.com/agustin-94/Certificaciones-y-proyectos/blob/main/Proyectos/turbina-pid)
 
 Simulación en Python de una turbina industrial con control automático de
 RPM mediante un algoritmo PID con anti-windup. Incluye visualización de la
@@ -21,7 +21,7 @@ respuesta del sistema con Matplotlib.
 
 ---
 
-### 💧 [Automatización con Node-RED (tanque de agua)](https://github.com/agustin-94/Certificaciones-y-proyectos/blob/main/node-red-tanque)
+### 💧 [Automatización con Node-RED (tanque de agua)](https://github.com/agustin-94/Certificaciones-y-proyectos/blob/main/Proyectos/node-red-tanque)
 
 Simulación de un proceso industrial de control de nivel de tanque, con
 lógica de bomba on/off tipo PLC e histéresis para evitar oscilaciones.
@@ -30,7 +30,7 @@ lógica de bomba on/off tipo PLC e histéresis para evitar oscilaciones.
 
 ---
 
-### 🔢 [Sistema OCR de dígitos + MQTT](https://github.com/agustin-94/Certificaciones-y-proyectos/blob/main/ocr-digitos)
+### 🔢 [Sistema OCR de dígitos + MQTT](https://github.com/agustin-94/Certificaciones-y-proyectos/blob/main/Proyectos/ocr-digitos)
 
 Red neuronal (Keras/TensorFlow) entrenada sobre MNIST para reconocer
 dígitos manuscritos, integrada con MQTT para publicar cada lectura como lo
@@ -40,7 +40,7 @@ haría un sistema de digitalización de medidores industriales.
 
 ---
 
-### 🛢️ [Pronóstico de producción de petróleo (XGBoost)](https://github.com/agustin-94/Certificaciones-y-proyectos/blob/main/petroleo-forecast)
+### 🛢️ [Pronóstico de producción de petróleo (XGBoost)](https://github.com/agustin-94/Certificaciones-y-proyectos/blob/main/Proyectos/petroleo-forecast)
 
 Análisis y forecasting de series de tiempo sobre datos públicos de
 producción de petróleo (cuenca Golfo San Jorge), con un modelo de gradient
@@ -50,7 +50,7 @@ boosting (XGBoost) y evaluación contra los últimos períodos reales.
 
 ---
 
-### 🔗 [Dashboard OCR + MQTT (integración Python ↔ Node-RED)](https://github.com/agustin-94/Certificaciones-y-proyectos/blob/main/dashboard-ocr-mqtt)
+### 🔗 [Dashboard OCR + MQTT (integración Python ↔ Node-RED)](https://github.com/agustin-94/Certificaciones-y-proyectos/blob/main/Proyectos/dashboard-ocr-mqtt)
 
 Proyecto integrador que conecta el reconocimiento de dígitos en Python con
 un dashboard en tiempo real en Node-RED, usando MQTT como capa de
@@ -60,7 +60,7 @@ mensajería — el flujo completo de datos que se ve en un sistema IT/OT real.
 
 ---
 
-### 🐳 [Stack de monitoreo con Docker — Node-RED + InfluxDB + Grafana](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/docker-monitoreo-stack)
+### 🐳 [Stack de monitoreo con Docker — Node-RED + InfluxDB + Grafana](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/Proyectos/docker-monitoreo-stack)
 
 Proyecto de práctica del curso "Virtualización y Docker" (Ingelearn): stack
 completo orquestado con Docker Compose que simula un sensor industrial en
@@ -71,7 +71,7 @@ visualiza en un dashboard de Grafana.
 
 ---
 
-### 👁️ [Visión Artificial con OpenCV — Rostros, Manos, Iris y OCR](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/vision-artificial-opencv)
+### 👁️ [Visión Artificial con OpenCV — Rostros, Manos, Iris y OCR](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/Proyectos/vision-artificial-opencv)
 
 Proyecto de práctica del curso de OpenCV y Reconocimiento de Imágenes con
 IA: detección facial en vivo con un modelo DNN, detección de manos con
@@ -84,7 +84,7 @@ cámara IP.
 
 ---
 
-### 🔥 [Rescoldo — Web de restaurante con animaciones 3D](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/rescoldo-web)
+### 🔥 [Rescoldo — Web de restaurante con animaciones 3D](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/Proyectos/rescoldo-web)
 
 Sitio web de un restaurante de cocina de fuego patagónica, con scroll animations
 (GSAP + ScrollTrigger) y piezas 3D generadas con Three.js para representar
@@ -96,7 +96,7 @@ cliente pueda actualizarlo sin tocar código.
 
 ---
 
-### 🥗 [Coach Nutricional — App con IA (Claude Artifact)](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/nutrition-coach-app)
+### 🥗 [Coach Nutricional — App con IA (Claude Artifact)](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/Proyectos/nutrition-coach-app)
 
 App de coaching nutricional construida como artifact interactivo con la API
 de Claude: el usuario completa un perfil (objetivos, actividad,
@@ -109,7 +109,7 @@ con almacenamiento clave/valor.
 
 ---
 
-### 🔍 [Auditoría SEO — Hertz Argentina (proyecto propio)](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/hertz-seo-auditoria)
+### 🔍 [Auditoría SEO — Hertz Argentina (proyecto propio)](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/Proyectos/hertz-seo-auditoria)
 
 Auditoría SEO independiente sobre hertz.com.ar: puntuación por área,
 diagnóstico técnico y de arquitectura, análisis de contenido, comparativa
