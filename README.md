@@ -60,6 +60,19 @@ mensajería — el flujo completo de datos que se ve en un sistema IT/OT real.
 
 ---
 
+### 🛡️ [Ciberseguridad Industrial — OSINT, CVEs y Mitigación](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/Proyectos/ciberseguridad-industrial-osint)
+
+Proyecto de práctica del curso de Ciberseguridad Industrial, enfocado en el
+lado defensivo: consulta de vulnerabilidades (CVE) públicas por producto
+industrial, chequeo de la propia exposición pública (Shodan/InternetDB) y
+escaneo de la propia red local con Nmap desde Kali Linux. Incluye marco
+ético/legal explícito y checklist de mitigación — todos los scripts están
+acotados por diseño a activos propios, nunca a terceros.
+
+**Stack:** Python · Kali Linux · Nmap · Shodan (InternetDB) · NVD API (CVE)
+
+---
+
 ### 🐳 [Stack de monitoreo con Docker — Node-RED + InfluxDB + Grafana](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/Proyectos/docker-monitoreo-stack)
 
 Proyecto de práctica del curso "Virtualización y Docker" (Ingelearn): stack
@@ -84,7 +97,7 @@ cámara IP.
 
 ---
 
-### 🔥 [Rescoldo — Web de restaurante con animaciones 3D](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/Proyectos/rescoldo-web)
+### 🔥 [Rescoldo — Demo de sitio web a medida (con animaciones 3D)](https://github.com/agustin-94/Certificaciones-y-proyectos/tree/main/Proyectos/rescoldo-web)
 
 Proyecto demostrativo de mi servicio de desarrollo web a medida: sitio de
 un restaurante de cocina de fuego patagónica, con scroll animations (GSAP +
