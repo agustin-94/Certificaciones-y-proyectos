@@ -12,6 +12,13 @@ cliente con autorización), no para buscar ni acceder a dispositivos de
 terceros. Esa distinción es el primer módulo del curso y el eje de todo lo
 demás.
 
+## Demo
+
+![Los 3 scripts corriendo en Kali Linux](ejemplos/demo-scripts.gif)
+
+Los tres scripts corriendo en secuencia sobre mis propios activos: escaneo
+de mi red local (`03`), y consulta de CVEs por producto (`01`).
+
 ## ⚠️ Marco ético y legal (leer antes de usar cualquier script)
 
 - **OSINT y Shodan indexan información ya pública** — eso los hace legales
@@ -37,7 +44,7 @@ demás.
 | Script | Qué hace |
 |---|---|
 | `01_consultar_cve.py` | Busca vulnerabilidades (CVE) ya publicadas en la NVD por palabra clave (ej. "Modbus", "Siemens S7", "SCADA"). Consulta pasiva a una base de datos pública — no accede a ningún sistema. |
-| `02_verificar_exposicion_propia.py` | Consulta Shodan sobre **tu propia IP pública** (la obtiene automáticamente) para ver qué puertos/servicios tuyos son visibles desde internet. No acepta una IP arbitraria por diseño. |
+| `02_verificar_exposicion_propia.py` | Consulta InternetDB (API gratuita de Shodan, sin cuenta ni API key) sobre **tu propia IP pública** (la obtiene automáticamente) para ver qué puertos/servicios tuyos son visibles desde internet, y si tienen CVEs conocidas asociadas. No acepta una IP arbitraria por diseño. |
 | `03_escaneo_red_local.py` | Usa `nmap` para inventariar los dispositivos conectados en tu propia red local (por defecto un rango `192.168.x.x`, cambiar solo por otra red propia). Primer paso de cualquier auditoría: saber qué tenés conectado. |
 
 ## Cómo correrlo
@@ -53,8 +60,7 @@ sudo apt install nmap   # si no lo tenés (ya viene instalado en Kali Linux)
 python scripts/01_consultar_cve.py "Modbus"
 python scripts/01_consultar_cve.py "Siemens S7"
 
-# Ver qué expone tu propia IP pública (necesita API key gratuita de shodan.io)
-export SHODAN_API_KEY="tu_api_key"
+# Ver qué expone tu propia IP pública (gratis, sin cuenta ni API key)
 python scripts/02_verificar_exposicion_propia.py
 
 # Inventariar dispositivos en tu propia red local
