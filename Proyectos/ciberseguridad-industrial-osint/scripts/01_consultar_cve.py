@@ -51,7 +51,11 @@ def buscar_cves(palabra_clave, resultados_max=10):
         severidad = "N/D"
         for clave in ("cvssMetricV31", "cvssMetricV30", "cvssMetricV2"):
             if clave in metrics:
-                severidad = metrics[clave][0]["cvssData"]["baseSeverity"]
+                metrica = metrics[clave][0]
+                # En CVSS v3.x, baseSeverity vive dentro de cvssData.
+                # En CVSS v2, baseSeverity es un campo al mismo nivel que cvssData.
+                severidad = metrica.get("cvssData", {}).get("baseSeverity") \
+                    or metrica.get("baseSeverity", "N/D")
                 break
 
         print(f"🔹 {cve_id}  [{severidad}]")
